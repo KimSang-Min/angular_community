@@ -1,0 +1,29 @@
+<div class="card-container" fxLayoutAlign="center center" fxLayout="column">
+
+    <mat-card class="deviceSetContent">
+        <header>
+            <h3>Angular Community !</h3>
+        </header>
+
+        <div class="profile_container">
+            <span class="span_signin" [routerLink]="['/sign-in']">
+                <div>
+                    <mat-icon>person</mat-icon>
+                </div>
+                <div>
+                    SIGN IN
+                </div>
+            </span>
+            
+            <span class="span_signup" [routerLink]="['/sign-up']">
+                <div>
+                    <mat-icon>person</mat-icon>
+                </div>
+                <div>
+                    SIGN UP
+                </div>
+            </span>
+            
+        </div>
+    </mat-card>
+</div>

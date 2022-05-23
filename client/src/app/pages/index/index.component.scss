@@ -1,0 +1,20 @@
+.card-container {
+    height: 100vh;
+    background: linear-gradient(#e8edff,#fff2f9);
+
+
+    .profile_container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .span_signup:hover {
+        cursor: pointer;
+    }
+
+    .span_signin:hover {
+        cursor: pointer;
+    }
+}
+
+
