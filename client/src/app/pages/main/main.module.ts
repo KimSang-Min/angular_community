@@ -13,7 +13,7 @@ import { NgMaterialUIModule } from 'src/app/ng-material-ui/ng-material-ui.module
   imports: [
     CommonModule,
     MainRoutingModule,
-    NgMaterialUIModule
+    NgMaterialUIModule,
   ]
 })
 export class MainModule { }
