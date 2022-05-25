@@ -1,1 +1,62 @@
-<p>sign-up works!</p>
+<div class="card-container" fxLayoutAlign="center center" fxLayout="column">
+	<header>
+		<h3>Community SignUp !</h3>
+	</header>
+    <mat-card class="deviceSetContent">
+    
+        <div class="signUp_container">
+            <form #signUpForm="ngForm" (ngSubmit)="(signUpForm.form.valid) && signUp()">
+                <mat-form-field class="example-full-width" appearance="fill">
+					<input matInput 
+						type="text" 
+						placeholder="E-Mail *" 
+						[(ngModel)]="signUpFormData.email" 
+						name="email" 
+						spellcheck="false" 
+						pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z.-]{2,3}$" 
+						required>
+				</mat-form-field>
+                <mat-form-field class="example-full-width" appearance="fill">
+					<input matInput 
+						type="text" 
+						placeholder="Name *" 
+						[(ngModel)]="signUpFormData.name" 
+						name="name" 
+						required>
+				</mat-form-field>
+
+				<mat-form-field class="example-full-width" appearance="fill">
+					<input matInput 
+						type="password" 
+						placeholder="Password *"
+						[(ngModel)]="signUpFormData.password" 
+						name="password" 
+						minlength="5" 
+						maxlength="14"
+						required>
+						<mat-error *ngIf="(signUpFormData.password != signUpFormData.confirmedPassword)">password must be match with Confirmed Password</mat-error>
+				</mat-form-field>
+				
+
+				<mat-form-field class="example-full-width" appearance="fill">
+					<input matInput 
+						type="password" 
+						placeholder="Password (Confirm) *"
+						[(ngModel)]="signUpFormData.confirmedPassword" 
+						name="confirmedPassword" 
+						minlength="5" 
+						maxlength="14"
+						required>
+
+						<mat-error *ngIf="(signUpFormData.password != signUpFormData.confirmedPassword)">password must be match with Confirmed Password</mat-error>
+				</mat-form-field>
+				
+                
+                <div fxLayoutAlign="center" fxLayout="column wrap">
+					<button type="submit" mat-raised-button class="signupBtn" [disabled]="!signUpForm.form.valid">SIGN UP</button>
+				</div>
+            </form>
+            
+        </div>
+    </mat-card>
+</div>

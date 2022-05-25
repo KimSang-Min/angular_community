@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgMaterialUIModule } from './ng-material-ui/ng-material-ui.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,7 +15,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommunityComponent } from './@layout/community.component';
 import { CommunityModule } from './@layout/community.module';
 import { AuthModule } from './pages/auth/auth.module';
+import { JwtModule } from '@auth0/angular-jwt';
+import { ENV } from 'src/@dw/config/config';
 
+
+export function tokenGetter() {
+	return localStorage.getItem(ENV.tokenName);
+}
 
 
 @NgModule({
@@ -25,13 +32,25 @@ import { AuthModule } from './pages/auth/auth.module';
     ],
     imports: [
         BrowserModule,
+        BrowserAnimationsModule,
         AppRoutingModule,
         NgMaterialUIModule,
         FormsModule,
         HttpClientModule,
         ToolbarModule,
         MatIconModule,
-        CommunityModule
+        CommunityModule,
+        AuthModule,
+
+        JwtModule.forRoot({
+            config: {
+                tokenGetter: tokenGetter,
+                disallowedRoutes: [
+                    '/api/v1/auth/sign-in',
+                    '/api/v1/auth/sign-up',
+                ]
+            }
+        }),
     ],
     providers: [],
     bootstrap: [AppComponent]

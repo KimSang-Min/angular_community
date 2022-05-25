@@ -9,7 +9,7 @@ import { IndexComponent } from './pages/index/index.component';
 
 const routes: Routes = [
     { 
-        path: 'welcome',
+        path: '',
         component: IndexComponent,
         // canActivate: [SignInGuard] 
     },
@@ -31,7 +31,7 @@ const routes: Routes = [
             import(`./pages/auth/auth.module`).then(m => m.AuthModule),
     },
     {
-		path: '',
+		path: 'main',
 		component: CommunityComponent,
 		// canActivate: [SignInGuard],
         children: [
