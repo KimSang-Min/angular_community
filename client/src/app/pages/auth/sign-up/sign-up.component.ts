@@ -35,38 +35,38 @@ export class SignUpComponent implements OnInit {
     ) {
         this.form = this.formBuilder.group(
             {
-              email: ['', [
-                Validators.required,
-                Validators.email
-              ]],
-              password: ['', [
-                Validators.required,
-                Validators.minLength(4),
-                Validators.minLength(15)
-              ]],
-              confirmedPassword: ['', [
-                Validators.required,
-                Validators.minLength(4),
-                Validators.minLength(15)
-              ]],
-              name: ['', [
-                Validators.required,
-              ]],
+                email: ['', [
+                    Validators.required,
+                    Validators.email
+                ]],
+                password: ['', [
+                    Validators.required,
+                    Validators.minLength(4),
+                    Validators.minLength(15)
+                ]],
+                confirmedPassword: ['', [
+                    Validators.required,
+                    Validators.minLength(4),
+                    Validators.minLength(15)
+                ]],
+                name: ['', [
+                    Validators.required,
+                ]],
             },
-          );
+        );
     }
 
     ngOnInit(): void {
-
         this.pwdMatchFlag = false;
- 
     }
 
 
     signUp() {
         console.log(this.signUpFormData)
 
-        this.authService.signUp(this.signUpFormData)
+        this.authService.signUp(this.signUpFormData).subscribe((data:any)=> {
+            
+        })
 
     }
 

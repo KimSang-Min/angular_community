@@ -14,8 +14,9 @@ export class AuthService {
 
 
     // 회원가입
-    signUp(userData) {
-		return this.http.post('/api/v1/auth/signUp', userData);
+    signUp(data) {
+        console.log(data)
+		return this.http.post('/api/v1/auth/signUp', data);
 	}
 
 }
