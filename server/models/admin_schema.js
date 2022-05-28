@@ -78,9 +78,8 @@ admin_Schema.pre('save', function(next){
     });
 })
 
-	// member_Schema.pre("update", function (next) {
-	admin_Schema.pre("findOneAndUpdate", function (next) {
-	
+// member_Schema.pre("update", function (next) {
+admin_Schema.pre("findOneAndUpdate", function (next) {
 	const password = this.getUpdate().password;
 	//const password = this.getUpdate().$set.password;
 	// mongoose 5.0.4 >>> const password = this.getUpdate().password;

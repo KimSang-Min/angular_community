@@ -6,6 +6,7 @@ import { ConfirmDialogComponent } from './dialog.component';
 import { PositiveDialogComponent } from './dialog.component';
 import { NegativeDialogComponent } from './dialog.component';
 import { NgMaterialUIModule } from 'src/app/ng-material-ui/ng-material-ui.module';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { NgMaterialUIModule } from 'src/app/ng-material-ui/ng-material-ui.module
   ],
   imports: [
     CommonModule,
-    NgMaterialUIModule
+    NgMaterialUIModule,
+    MatIconModule
   ]
 })
 

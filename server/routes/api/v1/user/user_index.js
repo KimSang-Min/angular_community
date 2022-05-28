@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 /* 유저정보  */
 router.get('/profile', userController.profile);
-router.put('/profileChange', userController.profileChange);
-router.post('/profileImageChange', upload.any(), userController.profileImageChange);
+// router.put('/profileChange', userController.profileChange);
+// router.post('/profileImageChange', upload.any(), userController.profileImageChange);
 
 module.exports = router;

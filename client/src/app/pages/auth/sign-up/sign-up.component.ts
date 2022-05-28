@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DialogService } from 'src/@dw/dialog/dialog.service';
 import { AuthService } from 'src/@dw/services/auth/auth.service';
 
 interface FormData {
@@ -32,6 +33,7 @@ export class SignUpComponent implements OnInit {
         private router: Router,
         private authService: AuthService,
         private formBuilder: FormBuilder,
+        private dialogService: DialogService,
     ) {
         this.form = this.formBuilder.group(
             {
@@ -62,12 +64,21 @@ export class SignUpComponent implements OnInit {
 
 
     signUp() {
-        console.log(this.signUpFormData)
+        this.authService.signUp(this.signUpFormData).subscribe((data: any) => {
 
-        this.authService.signUp(this.signUpFormData).subscribe((data:any)=> {
-            
+            this.dialogService.openDialogConfirm(`Are you sure you want to sign up?`).subscribe((result) => {
+                if (result) {
+                    if (data.message == 'created') {
+                        this.dialogService.openDialogPositive(`Created !`);
+                        this.router.navigate(['']);
+                    }
+
+                    if (data.message == 'duplicated') {
+                        this.dialogService.openDialogNegative(`Email duplicated!`);
+                    }
+                }
+            })
         })
-
     }
 
 }

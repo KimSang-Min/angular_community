@@ -1,6 +1,5 @@
+const { ObjectId } = require('bson');
 const jwt = require('jsonwebtoken');
-const member = require('../../../../models/member_schema');
-const MenuSide = require('../../../../models/menu_side_schema');
 const randomize = require('randomatic');
 const nodemailer = require("nodemailer");
 
@@ -15,49 +14,44 @@ exports.signUp = async (req, res) => {
   API  : Signup
   router.post('signUp', authController.signUp) 
 --------------------------------------------------`);
-	console.log(req.body);
-	// const dbModels = global.DB_MODLES;
-	// // console.log(member);
+	const dbModels = global.DB_MODELS;
 
-	// const criteria = {
-	// 	email: req.body.email
-	// };
-	// const projection = '_id retired';
-	// const memberData = {
-	// 	email: req.body.email,
-	// 	password: req.body.password,
-	// 	name: req.body.name,
-	// }
+	const data = req.body;
 
-	// try {
-	// 	const user = await member.findOne(criteria, projection);
+	const criteria = {
+		email: data.email
+	};
 
-	// 	console.log(user)
-	// 	if (user && user.retired == true) {
-	// 		return res.status(409).send({
-	// 			message: 'retired'
-	// 		})
-	// 	} else if (user) {
-	// 		return res.status(409).send({
-	// 			message: 'duplicated'
-	// 		})
-	// 	}
 
-	// 	const newMember = member(memberData);
-	// 	const newMenuSide = MenuSide({member_id: newMember._id});	// 회원가입 하면 menuside가 만들어짐
+	const memberData = {
+		email: data.email,
+		password: data.password,
+		name: data.name,
+	}
 
-	// 	await newMember.save();
-	// 	await newMenuSide.save();	// 회원가입 하면 menuside가 만들어짐
+	try {
+		const user = await dbModels.Member.findOne(criteria);
 
-	// 	res.status(201).send({
-	// 		message: 'created'
-	// 	});
-	// } catch (error) {
-	// 	console.log(error);
-	// 	return res.status(500).send({
-	// 		error
-	// 	});
-	// }
+		if (user) {
+			return res.status(201).send({
+				message: 'duplicated'
+			})
+		}
+
+		const newMember = await dbModels.Member(memberData)
+		await newMember.save();
+
+
+		res.status(201).send({
+			message: 'created'
+		});
+
+	} catch (error) {
+		console.log(error);
+		return res.status(500).send({
+			error
+		});
+	}
 
 };
 
@@ -70,37 +64,33 @@ exports.signIn = async (req, res) => {
   API  : SignIn
   router.post('signIn', authController.signIn) 
 --------------------------------------------------`);
-	// console.log(req.body);
+	const dbModels = global.DB_MODELS;
+
+	const data = req.body;
+
 	try {
 
 		const criteria = {
-			email: req.body.email
+			email: data.email
 		}
 
-		const user = await member.findOne(criteria);
+		const user = await dbModels.Member.findOne(criteria);
 
-		if(!user) {
+		if (!user) {
 			// console.log('No Matched Account');
 			return res.status(404).send({
 				message: 'not found'
 			});
 		}
 
-
-		if(user && user.retired == true){
-			return res.status(400).send({
-				message: `retired`
-			});
-		}
-
 		// console.log('user', user);
 
-		const isMatched = await user.comparePassword(req.body.password, user.password);
+		const isMatched = await user.comparePassword(data.password, user.password);
 
-		if(!isMatched) {
+		if (!isMatched) {
 			// console.log('Password Mismatch');
-			return res.status(404).send({ 
-				message: 'mismatch'
+			return res.status(404).send({
+				message: 'not found'
 			});
 		}
 
@@ -115,7 +105,7 @@ exports.signIn = async (req, res) => {
 		};
 
 		const token = jwt.sign(payload, process.env.JWT_SECRET, jwtOption);
-		
+
 		const projection = {
 			password: false,
 			createdAt: false,
@@ -168,7 +158,7 @@ exports.getEcode = async (req, res) => {
 
 		const user = await member.findOneAndUpdate(criteria, passwordReset);
 
-		if(!user) {
+		if (!user) {
 			console.log('NO RESULT');
 			return res.status(404).send({
 				message: 'not found'
@@ -176,7 +166,7 @@ exports.getEcode = async (req, res) => {
 		}
 
 		// --------------------------- AWS_SES
-		
+
 		// If you're using Amazon SES in a region other than US West (Oregon),
 		// replace email-smtp.us-west-2.amazonaws.com with the Amazon SES SMTP
 		// endpoint in the appropriate AWS Region.
@@ -239,7 +229,7 @@ exports.getEcode = async (req, res) => {
 		var tag0 = "key0=value0";
 		var tag1 = "key1=value1";
 
-		async function main(){
+		async function main() {
 
 			// Create the SMTP transport.
 			let transporter = nodemailer.createTransport({
@@ -247,8 +237,8 @@ exports.getEcode = async (req, res) => {
 				port: port,
 				secure: false, // true for 465, false for other ports
 				auth: {
-				user: smtpUsername,
-				pass: smtpPassword
+					user: smtpUsername,
+					pass: smtpPassword
 				}
 			});
 
@@ -263,9 +253,9 @@ exports.getEcode = async (req, res) => {
 				html: body_html,
 				// Custom headers for configuration set and message tags.
 				headers: {
-				'X-SES-CONFIGURATION-SET': configurationSet,
-				'X-SES-MESSAGE-TAGS': tag0,
-				'X-SES-MESSAGE-TAGS': tag1
+					'X-SES-CONFIGURATION-SET': configurationSet,
+					'X-SES-MESSAGE-TAGS': tag0,
+					'X-SES-MESSAGE-TAGS': tag1
 				}
 			};
 
@@ -315,8 +305,8 @@ exports.getTempPw = async (req, res) => {
 		}
 
 		const user = await member.findOne(emailMatch, projection).lean();
-		
-		if(user.pw_reset_code !== req.body.eCode) {
+
+		if (user.pw_reset_code !== req.body.eCode) {
 			console.log('NOT MATCHED');
 			return res.status(404).send({
 				message: 'not match'
@@ -329,7 +319,7 @@ exports.getTempPw = async (req, res) => {
 
 		const getTempPw = await member.findOneAndUpdate(emailMatch, updatePw);
 
-		if(!getTempPw) {
+		if (!getTempPw) {
 			console.log('NO RESULT');
 			return res.status(404).send({
 				message: 'pwd err'
@@ -337,7 +327,7 @@ exports.getTempPw = async (req, res) => {
 		};
 
 		// --------------------------- AWS_SES
-		
+
 		// If you're using Amazon SES in a region other than US West (Oregon),
 		// replace email-smtp.us-west-2.amazonaws.com with the Amazon SES SMTP
 		// endpoint in the appropriate AWS Region.
@@ -400,7 +390,7 @@ exports.getTempPw = async (req, res) => {
 		var tag0 = "key0=value0";
 		var tag1 = "key1=value1";
 
-		async function main(){
+		async function main() {
 
 			// Create the SMTP transport.
 			let transporter = nodemailer.createTransport({
@@ -408,8 +398,8 @@ exports.getTempPw = async (req, res) => {
 				port: port,
 				secure: false, // true for 465, false for other ports
 				auth: {
-				user: smtpUsername,
-				pass: smtpPassword
+					user: smtpUsername,
+					pass: smtpPassword
 				}
 			});
 
@@ -424,9 +414,9 @@ exports.getTempPw = async (req, res) => {
 				html: body_html,
 				// Custom headers for configuration set and message tags.
 				headers: {
-				'X-SES-CONFIGURATION-SET': configurationSet,
-				'X-SES-MESSAGE-TAGS': tag0,
-				'X-SES-MESSAGE-TAGS': tag1
+					'X-SES-CONFIGURATION-SET': configurationSet,
+					'X-SES-MESSAGE-TAGS': tag0,
+					'X-SES-MESSAGE-TAGS': tag1
 				}
 			};
 
@@ -441,7 +431,7 @@ exports.getTempPw = async (req, res) => {
 
 		return res.send({
 			message: 'sentPw'
-		})	
+		})
 	} catch (err) {
 		return res.ststus(500).send('Server Error');
 	}

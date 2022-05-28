@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { SignInGuard } from 'src/@dw/guard/sign-in.guard';
 import { CommunityComponent } from './@layout/community.component';
 import { SignInComponent } from './pages/auth/sign-in/sign-in.component';
 import { SignUpComponent } from './pages/auth/sign-up/sign-up.component';
@@ -9,9 +10,9 @@ import { IndexComponent } from './pages/index/index.component';
 
 const routes: Routes = [
     { 
-        path: '',
+        path: 'welcome',
         component: IndexComponent,
-        // canActivate: [SignInGuard] 
+        canActivate: [SignInGuard] 
     },
     {
         path: 'sign-in',
@@ -31,9 +32,9 @@ const routes: Routes = [
             import(`./pages/auth/auth.module`).then(m => m.AuthModule),
     },
     {
-		path: 'main',
+		path: '',
 		component: CommunityComponent,
-		// canActivate: [SignInGuard],
+		canActivate: [SignInGuard],
         children: [
 			{
 				path: 'main',

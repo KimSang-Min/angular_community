@@ -18,56 +18,9 @@ const member_Schema = mongoose.Schema(
 			type: String,
 			required: true,
 		},
-		profile_img_key:{
-			type: String,
-			default: ''
-		},
-		profile_img: { 
-			type: String,
-			default: ''
-		},
-		mobile: { 
-			type: String,
-			default: ''
-		},
-		department: { 
-			type: String,
-			default: '' 
-		},
 		isManager: { 
 			type: Boolean, 
 			default: false
-		},
-		// manager_id: {
-		// 	type: mongoose.Schema.Types.ObjectId,
-        //     ref: 'Member',
-		// 	default: null
-		// },
-		position: { 
-			type: String,
-			default: ''
-		},
-		location: { 
-			type: mongoose.Schema.Types.ObjectId,
-            ref: 'NationalHoliday',
-			default: null
-		},
-		emp_start_date: { 
-			type: Date,
-			default: null
-		},
-		emp_end_date: { 
-			type: Date,
-			default: null
-		},
-		isAdmin: { 
-			type: Boolean, 
-			default: false
-		},
-		company_id: { 
-			type: mongoose.Schema.Types.ObjectId,
-            ref: 'Company',
-			default: null
 		},
 		// password reset
 		pw_reset_code: { 
@@ -75,15 +28,7 @@ const member_Schema = mongoose.Schema(
 		},
 		pw_reset_date: { 
 			type: Date
-		},
-		resignation_date: {
-			type: Date
-		},
-		retired: {
-			type: Boolean,
-			default: false
 		}
-		
 	},
 	{
 		timestamps: true

@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const admin = require('../../../../../models/admin_schema');
-const adMenuSide = require('../../../../../models/ad_menu_side_schema');
 const randomize = require('randomatic');
 const nodemailer = require("nodemailer");
 
@@ -37,10 +36,8 @@ exports.signUp = async (req, res) => {
 		}
 
 		const newAdmin = admin(adminData);
-		const newAdMenuSide = adMenuSide({admin_id: newAdmin._id});	// 회원가입 하면 menuside가 만들어짐
 
 		await newAdmin.save();
-		await newAdMenuSide.save();	// 회원가입 하면 menuside가 만들어짐
 
 		res.status(201).send({
 			message: 'created'

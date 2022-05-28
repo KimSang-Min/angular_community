@@ -1,0 +1,50 @@
+.card-container {
+    height: 100vh;
+    background: linear-gradient(#e8edff,#fff2f9);
+
+    .deviceSetContent{
+
+        width: 300px;
+
+        .signUp_container {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+
+    
+}
+
+.example-form {
+	width: 300px;
+  }
+  
+.example-full-width {
+	width: 100%;
+}
+
+.cardSubTitle {
+	color: rgb(170, 170, 170);
+	margin-bottom: 20px;
+	font-size: 16px;
+}
+
+.signupBtn {
+	background-color: #00154F;
+	color: #fff
+}
+
+// ::ng-deep .mat-focused .mat-form-field-label {
+// 	/*change color of label*/
+// 	color: green !important;
+// }
+  
+// ::ng-deep.mat-form-field-underline {
+// 	/*change color of underline*/
+// 	background-color: green !important;
+// } 
+  
+// ::ng-deep.mat-form-field-ripple {
+//    /*change color of underline when focused*/
+//    background-color: green !important;;
+// }
