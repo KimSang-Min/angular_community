@@ -1,10 +1,19 @@
 <div>
     <!-- 상단 toolbar -->
-    <app-toolbar></app-toolbar>
+    <app-toolbar class="toolbar"></app-toolbar>
 
-    <!-- 메인 -->
-    <main>
-        <router-outlet></router-outlet>
-    </main>
+    <div class="content_container">
+        <!-- 사이드바  -->
+        <div class="sidenav_container">
+            <app-sidenav></app-sidenav>
+        </div>
+        
+        <!-- 메인 -->
+        <main class="main_container">
+            <router-outlet></router-outlet>
+        </main>
+    </div>
+
+    
 </div>
 

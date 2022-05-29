@@ -41,6 +41,10 @@ const routes: Routes = [
 				loadChildren: () => import(`./pages/main/main.module`).then(m => m.MainModule),
 			},
             {
+				path: 'bulletin',
+				loadChildren: () => import(`./pages/bulletin-board/bulletin-board.module`).then(m => m.BulletinBoardModule),
+			},
+            {
                 path: '',
                 redirectTo: 'main',
                 pathMatch: 'full'

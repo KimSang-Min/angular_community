@@ -20,6 +20,11 @@ em {
 	font-style: initial;
 }
 
+.cdk-global-scrollblock {
+    position: static;
+    overflow: hidden !important;
+}
+
 @media screen and (min-width: 1280px) {
 	body {
 		font-family: 'Noto Sans', 'Roboto', "Helvetica Neue", sans-serif;

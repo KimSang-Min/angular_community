@@ -2,19 +2,43 @@
     height: 100vh;
     background: linear-gradient(#e8edff,#fff2f9);
 
-
-    .profile_container {
+    mat-card {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
+        justify-content: center;
+        
+
+        img {
+            margin: 0 auto;
+            width: 250px;
+            height: 250px;
+        }
+
+
+        .profile_container {
+            width: 300px;
+            display: flex;
+            justify-content: space-around;
+
+            .span_signin {
+                text-align: center;
+            }
+        
+            .span_signin:hover {
+                cursor: pointer;
+            }
+
+            .span_signup {
+                text-align: center;
+            }
+
+            .span_signup:hover {
+                cursor: pointer;
+            }
+        }
     }
 
-    .span_signup:hover {
-        cursor: pointer;
-    }
-
-    .span_signin:hover {
-        cursor: pointer;
-    }
+    
 }
 
 

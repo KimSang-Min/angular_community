@@ -18,6 +18,7 @@ import { AuthModule } from './pages/auth/auth.module';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ENV } from 'src/@dw/config/config';
 import { DialogModule } from 'src/@dw/dialog/dialog.module';
+import { SidenavModule } from './@layout/sidenav/sidenav.module';
 
 
 export function tokenGetter() {
@@ -44,6 +45,7 @@ export function tokenGetter() {
         AuthModule,
         DialogModule,
         CommunityModule,
+        SidenavModule,
 
         JwtModule.forRoot({
             config: {

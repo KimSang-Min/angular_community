@@ -22,6 +22,7 @@ export class ProfileService {
 			tap( 
 				(res: any) => {
 					this.dataStorageService.updateUserProfile(res);
+					return res.message;
 				}
 			)
 		);
