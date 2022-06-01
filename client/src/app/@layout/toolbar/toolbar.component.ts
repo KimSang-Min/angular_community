@@ -43,6 +43,11 @@ export class ToolbarComponent implements OnInit {
         this.unsubscribe$.complete();
     }
 
+    ngOnDestory(): void {
+        this.unsubscribe$.next();
+        this.unsubscribe$.complete();
+    }
+
 
     getUserProfileData() {
         this.dataStorageService.userProfile.pipe(takeUntil(this.unsubscribe$)).subscribe((res: any) => {

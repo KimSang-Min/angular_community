@@ -26,7 +26,6 @@ exports.profile = async (req, res) => {
 
 	try {
 		const user = await dbModels.Member.findOne(criteria, projection);
-		console.log(user);
 
 		if (!user) {
 			return res.status(401).send({

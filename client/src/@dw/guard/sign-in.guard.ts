@@ -23,11 +23,9 @@ export class SignInGuard implements CanActivate {
 				return true;
 			} 
 			else if(routePath == '' && state.url == '/main'){
-                this.dialogService.openDialogNegative('Please login first');
 				this.router.navigate(['welcome']);
 			}
 			else {
-				this.dialogService.openDialogNegative('Please login first');
 				this.router.navigate(['sign-in'],{queryParams:{'redirectURL':state.url}});
 			}
 			

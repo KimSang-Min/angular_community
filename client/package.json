@@ -26,6 +26,7 @@
     "@editorjs/header": "^2.6.2",
     "@editorjs/list": "^1.7.0",
     "@editorjs/table": "^2.0.2",
+    "@types/socket.io-client": "^3.0.0",
     "angular-calendar": "^0.29.0",
     "angularx-flatpickr": "^6.6.0",
     "rxjs": "~7.5.0",
