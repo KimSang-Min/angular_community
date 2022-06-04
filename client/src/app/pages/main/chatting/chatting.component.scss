@@ -8,7 +8,7 @@
     height: 100%;
 }
 .chatContainer {
-    height: calc(100vh - 250px);
+    height: calc(100vh - 280px);
     overflow-y: auto;
     overflow-x: hidden;
     font-size: 13px;
@@ -23,6 +23,11 @@
     border-bottom: 1px solid black;
     background-color: white;
     line-height: 28px;
+    position: relative;
+
+    span {
+        padding-left: 20px;
+    }
 }
 
 .chatInMeeting {

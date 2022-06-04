@@ -12,12 +12,12 @@ module.exports = function (wsServer, socket, app) {
         
         socket.join('chatting');
 
-        console.log(data)
-
         const userCount = socket.adapter.rooms.get('chatting')?.size;
 
         // 자기 자신 포함 같은 room에 있는 사람들에게 현재 접속자 수 전달
         socketCommunity.to('chatting').emit("userCount", userCount);
+
+        socketCommunity.to('chatting').emit("userInfo", data);
     });
 
 

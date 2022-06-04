@@ -1,12 +1,19 @@
 <div class="chatAllBorder">
+    <div class="chat_header">
+        <span>채팅 참여 인원 {{userCount}}명</span>
+    </div>
     <div class="chatContainer" #target [scrollTop]="target.scrollHeight">
-        <div class="chat_header">
-            <span>채팅 참여 인원 {{userCount}}명</span>
-        </div>
-        <div class="chatInMeeting" *ngFor="let item of chatData">         
+
+        
+        <!-- <div class="log-part terminal">
+            <pre *ngIf="logString">{{logString}}</pre>
+        </div> -->
+        
+        <div class="chatInMeeting" *ngFor="let item of chatData">               
             <!-- <button mat-button class="deleteChatBtn"  (click)="deleteChat(item._id)" *ngIf="item.userId==userId">
                 <mat-icon class="settingIcon ">close</mat-icon>
             </button>    -->
+            
             <div [ngClass]="item._id==userProfileData._id ? 'myChat' : 'participantChat'">
                 <div class="chatting_inner" fxLayout="row">
                     <div class="chatting_charMember_name">
@@ -20,7 +27,10 @@
                     {{item.chatContent}}
                 </div>
             </div>
-        </div>
+        </div>       
+        
+        
+        
     </div>
 
     

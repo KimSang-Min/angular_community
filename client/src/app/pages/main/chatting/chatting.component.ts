@@ -18,8 +18,10 @@ export class ChattingComponent implements OnInit {
 
     userProfileData;
     userCount;
+    currentUser;
     chatContent: any;
     chatData = [];
+    logString;
 
     constructor(
         private socketService: SocketioService,
@@ -33,10 +35,17 @@ export class ChattingComponent implements OnInit {
         this.dataStorageService.userProfile.subscribe(
             (data: any) => {
                 this.userProfileData = data;
+
+                if(this.userProfileData._id != undefined) {
+                    this.socket.emit('join:room', this.userProfileData);
+                }
             }
         );
 
-        this.socket.emit('join:room', '');
+        
+        this.socket.on('userInfo', (data) => {
+            this.currentUser = data;
+        })
         
         this.socket.on('userCount', (data) => {
             this.userCount = data;
@@ -44,13 +53,13 @@ export class ChattingComponent implements OnInit {
 
         // chat 보내면 받는 부분
         this.socket.on('receiveChatData', (data) => {
-            
             this.chatData.push(data)
         })
     }
 
 
     createChat() {
+        
         const createAt = new Date()
 
         const data = {

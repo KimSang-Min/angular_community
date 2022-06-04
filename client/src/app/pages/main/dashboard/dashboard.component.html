@@ -1,0 +1,60 @@
+<div class="mainContentContainer">
+    <div class="mainContent">
+        <div fxLayout="row">
+            <div class="mainTitle">대시보드</div>
+        </div>
+
+        <div class="leaveContainer_wrap" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+            <div class="leaveContainer">
+                <div class="leaveBox" fxLayout="column" fxLayoutGap="20px">
+                    <div class="count-people" fxFlex="80">
+                        <mat-icon>assignment_ind</mat-icon>
+                    </div>
+                    <div class="leaveSubSection" fxFlex="20">
+                        <span class="fontBold">게시글 작성 수</span>
+                    </div>
+                </div>
+            </div>
+            <div class="leaveContainer">
+                <div class="leaveBox" fxLayout="column" fxLayoutGap="20px">
+                    <div class="count-people">
+                        <mat-icon>people</mat-icon>
+                    </div>
+                    <div class="leaveSubSection">
+                        <span class="fontBold">회원 수</span>
+                    </div>
+                </div>
+            </div>
+            <div class="leaveContainer">
+                <div class="leaveBox leaveBox_2" fxLayout="column nowrap" fxLayoutAlign="center center"
+                    style="height: 153px;">
+                    <!-- <div class="fontBold"style="font-size:28px;">{{ currentDate | date: 'YYYY.MM' }}</div> -->
+                    <div class="fontBold" style="font-size:28px;"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <mat-card class="example-card">
+            <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>Shiba Inu</mat-card-title>
+                <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+                alt="Photo of a Shiba Inu">
+            <mat-card-content>
+                <p>
+                    The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+                    A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+                    bred for hunting.
+                </p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button>LIKE</button>
+                <button mat-button>SHARE</button>
+            </mat-card-actions>
+        </mat-card>
+
+    </div>
+</div>

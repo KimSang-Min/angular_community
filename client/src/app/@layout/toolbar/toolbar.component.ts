@@ -56,7 +56,7 @@ export class ToolbarComponent implements OnInit {
     }
 
     logOut() {
-        this.dialogService.openDialogConfirm('Are you sure you want to log out?').subscribe((result)=>{
+        this.dialogService.openDialogConfirm('로그아웃하시겠습니까?').subscribe((result)=>{
             if(result) {
                 this.authService.logOut();
                 this.router.navigate(['welcome']);

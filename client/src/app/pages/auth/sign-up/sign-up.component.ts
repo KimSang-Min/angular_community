@@ -66,7 +66,7 @@ export class SignUpComponent implements OnInit {
     signUp() {
         this.authService.signUp(this.signUpFormData).subscribe((data: any) => {
 
-            this.dialogService.openDialogConfirm(`Are you sure you want to sign up?`).subscribe((result) => {
+            this.dialogService.openDialogConfirm(`회원가입하시겠습니까?`).subscribe((result) => {
                 if (result) {
                     if (data.message == 'created') {
                         this.dialogService.openDialogPositive(`Created !`);
