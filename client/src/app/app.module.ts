@@ -19,6 +19,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { ENV } from 'src/@dw/config/config';
 import { DialogModule } from 'src/@dw/dialog/dialog.module';
 import { SidenavModule } from './@layout/sidenav/sidenav.module';
+import { ChattingModule } from './@layout/chatting/chatting.module';
 
 
 export function tokenGetter() {
@@ -46,6 +47,7 @@ export function tokenGetter() {
         DialogModule,
         CommunityModule,
         SidenavModule,
+        ChattingModule,
 
         JwtModule.forRoot({
             config: {

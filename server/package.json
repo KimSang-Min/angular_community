@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "set NODE_ENV=development && nodemon server.js",
-    "prod": "set NODE_ENV=production && nodemon server.js",
     "start": "set NODE_ENV=development && nodemon server.js",
+    "prod": "set NODE_ENV=production && nodemon server.js",
+    "linux-test": "export NODE_ENV=development && nodemon server.js",
     "linux-prod": "export NODE_ENV=production && nodemon server.js"
   },
   "author": "",

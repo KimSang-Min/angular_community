@@ -1,5 +1,7 @@
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
+
+import { Component, OnInit, } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs';
 
 @Component({
@@ -9,20 +11,36 @@ import { take } from 'rxjs';
 })
 export class BulletinBoardUploadComponent implements OnInit {
 
+    boardName: string;
+    uploadForm: FormGroup;
+
     constructor(
-        private _ngZone: NgZone
-    ) { }
-
-    @ViewChild('autosize') autosize: CdkTextareaAutosize;
-
-    triggerResize() {
-        // Wait for changes to be applied, then trigger textarea resize.
-        this._ngZone.onStable.pipe(take(1)).subscribe(() => this.autosize.resizeToFitContent(true));
+        private router: Router,
+        private route: ActivatedRoute,
+        private formBuilder: FormBuilder
+    ) {
+        this.uploadForm = this.formBuilder.group({
+            title: new FormControl('', [Validators.required]),
+            content: new FormControl('', [Validators.required])
+        });
+        // this.boardName = this.route.snapshot.params['boardName'];
     }
+
+    // 폼 필드에 쉽게 접근하기 위해 getter 설정
+    get f() { return this.uploadForm.controls; }
+
+    
+
+
 
     ngOnInit(): void {
     }
 
 
-    
+    save() {
+        console.log(this.uploadForm.value)
+    }
+
+
 }
+

@@ -1,8 +1,11 @@
 <mat-toolbar class="tb-color">
-    <span>반가워요!</span>
+    <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>반가워요!</mat-card-title>
+    </mat-card-header>
 
     <div>
-        <button (click)="logOut()" mat-raised-button>로그아웃</button>
+        <button class="logOutBtn" (click)="logOut()" mat-raised-button>로그아웃</button>
     </div>
     
 </mat-toolbar>

@@ -1,20 +1,23 @@
-<div class="upload_container">
-    <mat-form-field appearance="fill">
-        <mat-label>Font size</mat-label>
-        <mat-select #fontSize value="16px" (selectionChange)="triggerResize()">
-            <mat-option value="10px">10px</mat-option>
-            <mat-option value="12px">12px</mat-option>
-            <mat-option value="14px">14px</mat-option>
-            <mat-option value="16px">16px</mat-option>
-            <mat-option value="18px">18px</mat-option>
-            <mat-option value="20px">20px</mat-option>
-        </mat-select>
-    </mat-form-field>
+<div class="wrapper">
+    <mat-card>
+        <mat-card-title>글쓰기</mat-card-title>
+        <mat-card-content>
+          <form [formGroup]="uploadForm">
+            <p>
+              <mat-form-field >
+                <input type="text" matInput placeholder="제목" formControlName="title">
+              </mat-form-field>
+            </p>
+            <p>
+              <mat-form-field appearance="outline">
+                <textarea matInput placeholder="내용" formControlName="content" rows="30"></textarea>
+              </mat-form-field>
+            </p>
     
-    <mat-form-field style="height: 500px;"  [style.fontSize]="fontSize.value" appearance="fill">
-        <mat-label>Autosize textarea</mat-label>
-        <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
-            cdkAutosizeMaxRows="5">
-        </textarea>
-    </mat-form-field>
+            <div class="button">
+              <button type="submit" mat-raised-button color="primary" [disabled]="!uploadForm.valid" (click)="save()">등록</button>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
 </div>

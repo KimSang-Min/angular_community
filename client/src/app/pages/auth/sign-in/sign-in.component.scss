@@ -1,49 +1,51 @@
 .card-container {
     height: 100vh;
-    background: linear-gradient(#e8edff,#fff2f9);
+    background: linear-gradient(#e8edff, #fff2f9);
 
-    .deviceSetContent{
+    .signIn_container {
 
-        width: 300px;
+        .signInBtn {
+            margin-bottom: 13px;
+        }
 
-        .signUp_container {
-            display: flex;
-            justify-content: space-between;
+        .backBtn:hover {
+            background-color: #9ed887;
         }
     }
-
     
 }
 
-.example-form {
-	width: 300px;
-  }
-  
-.example-full-width {
-	width: 100%;
-}
 
-.cardSubTitle {
-	color: rgb(170, 170, 170);
-	margin-bottom: 20px;
-	font-size: 16px;
+
+.example-full-width {
+    width: 100%;
 }
 
 .signupBtn {
-	background-color: #00154F;
-	color: #fff
+    background-color: #00154F;
+    color: #fff
+}
+
+
+.example-card {
+    max-width: 330px;
+}
+
+.example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
 }
 
 // ::ng-deep .mat-focused .mat-form-field-label {
 // 	/*change color of label*/
 // 	color: green !important;
 // }
-  
+
 // ::ng-deep.mat-form-field-underline {
 // 	/*change color of underline*/
 // 	background-color: green !important;
 // } 
-  
+
 // ::ng-deep.mat-form-field-ripple {
 //    /*change color of underline when focused*/
 //    background-color: green !important;;

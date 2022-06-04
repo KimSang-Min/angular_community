@@ -36,7 +36,7 @@
 }
 
 .main_container {
-    width: 100%;
+    width: calc(100% - 595px);
     margin: 16px 16px 0 0;
     background-color: white;
 }

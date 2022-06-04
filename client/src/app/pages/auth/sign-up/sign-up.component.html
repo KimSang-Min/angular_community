@@ -1,34 +1,37 @@
 <div class="card-container" fxLayoutAlign="center center" fxLayout="column">
-	<header>
-		<h3>회원가입</h3>
-	</header>
-    <mat-card class="deviceSetContent">
-    
+	
+    <mat-card class="example-card">
+        <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>로그인</mat-card-title>
+            <mat-card-subtitle>반가워요!</mat-card-subtitle>
+        </mat-card-header>
+      
         <div class="signUp_container">
             <form #signUpForm="ngForm" (ngSubmit)="(signUpForm.form.valid) && signUp()">
-                <mat-form-field class="example-full-width" appearance="fill">
+                <mat-form-field class="example-full-width">
 					<input matInput 
 						type="text" 
-						placeholder="E-Mail *" 
+						placeholder="E-Mail" 
 						[(ngModel)]="signUpFormData.email" 
 						name="email" 
 						spellcheck="false" 
 						pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z.-]{2,3}$" 
 						required>
 				</mat-form-field>
-                <mat-form-field class="example-full-width" appearance="fill">
+                <mat-form-field class="example-full-width">
 					<input matInput 
 						type="text" 
-						placeholder="Name *" 
+						placeholder="Name" 
 						[(ngModel)]="signUpFormData.name" 
 						name="name" 
 						required>
 				</mat-form-field>
 
-				<mat-form-field class="example-full-width" appearance="fill">
+				<mat-form-field class="example-full-width">
 					<input matInput 
 						type="password" 
-						placeholder="Password *"
+						placeholder="Password"
 						[(ngModel)]="signUpFormData.password" 
 						name="password" 
 						minlength="5" 
@@ -38,10 +41,10 @@
 				</mat-form-field>
 				
 
-				<mat-form-field class="example-full-width" appearance="fill">
+				<mat-form-field class="example-full-width">
 					<input matInput 
 						type="password" 
-						placeholder="Password (Confirm) *"
+						placeholder="Password (Confirm)"
 						[(ngModel)]="signUpFormData.confirmedPassword" 
 						name="confirmedPassword" 
 						minlength="5" 
@@ -53,7 +56,8 @@
 				
                 
                 <div fxLayoutAlign="center" fxLayout="column wrap">
-					<button type="submit" mat-raised-button class="signupBtn" [disabled]="!signUpForm.form.valid">SIGN UP</button>
+					<button type="submit" mat-raised-button class="signUpBtn" [disabled]="!signUpForm.form.valid">회원가입</button>
+                    <button mat-raised-button class="backBtn" [routerLink]="['/welcome']">뒤로가기</button>
 				</div>
             </form>
             

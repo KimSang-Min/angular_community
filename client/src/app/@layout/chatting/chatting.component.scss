@@ -3,27 +3,30 @@
     right: 17px;
     flex-direction: column;
     flex-shrink: 0;
-    width: 500px;
-    border: 1px solid black;
+    width: 300px;
+    // border: 1px solid black;
     height: 100%;
+    margin-top: 16px;
 }
 .chatContainer {
-    height: calc(100vh - 280px);
+    height: calc(100vh - 263px);
     overflow-y: auto;
     overflow-x: hidden;
     font-size: 13px;
     line-height: 1.4;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid gray;
     background-color: #9bbbd4;
+    border-radius: 0 0 10px 10px;
 }
 
 .chat_header {
-    width: 500px;
+    width: 300px;
     height: 28px;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid gray;
     background-color: white;
     line-height: 28px;
     position: relative;
+    border-radius: 10px 10px 0 0;
 
     span {
         padding-left: 20px;
@@ -31,7 +34,6 @@
 }
 
 .chatInMeeting {
-    padding: 10px;
     border: gray;
 }
 .chatContainer::-webkit-scrollbar-track{
@@ -90,7 +92,7 @@
     max-width: 250px;
     min-height: 30px;
     padding: 12px;
-    margin: 14px 0px 0px 204px;
+    margin: 14px 6px 7px 40px
 }
 
 .participantChat {
@@ -100,7 +102,7 @@
     max-width: 250px;
     min-height: 30px;
     padding: 12px;
-    margin: 14px 30px 0px 0px;
+    margin: 14px 40px 7px 6px;
 }
 
 .chatting_charMember_name{
@@ -122,13 +124,12 @@
 }
 
 .chattingContainer{
-    margin: 10px 10px 0;
-    width: 478px;
+    width: 298px;
     background-color: white;
     border: 1px solid gray;
     border-radius: 3px;
     position: fixed;
-    bottom: 10px;
+    bottom: 0px;
 }.mat-button{
     float: right;
 }
@@ -137,14 +138,14 @@
 
 /////////////////
 .chatInput{
-    font-size:13px;
+    font-size: 13px;
     flex-shrink: 0;
     position: relative;
     border: white;
     margin-top: 10px;
     margin-left: 10px;
     align-content: center;
-    width: 94%;
+    width: 92%;
     min-height: 80px;
 }
 

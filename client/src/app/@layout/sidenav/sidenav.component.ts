@@ -11,6 +11,7 @@ import { ProfileService } from 'src/@dw/services/user/profile.service';
 export class SidenavComponent implements OnInit {
     
     userProfileData;
+    description;
 
     constructor(
         private dataStorageService: DataStorageService,
@@ -22,8 +23,16 @@ export class SidenavComponent implements OnInit {
         this.dataStorageService.userProfile.subscribe(
             (data: any) => {
                 this.userProfileData = data;
+
+                if(this.userProfileData.isManager == true) {
+                    this.description = 'Manager'
+                } else {
+                    this.description = 'User'
+                }
             }
         );
+
+        
     }
 
     goToHome() {
