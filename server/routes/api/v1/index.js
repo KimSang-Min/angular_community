@@ -9,6 +9,7 @@ const adAuth = require('./admin/adAuth/adAuth_index');
 // AUTH
 const user = require('./user/user_index');
 const admin = require('./admin/admin_index');
+const bulletinBoard = require('./bulletinBoard/bulletinBoard_index')
 
 
 /*-----------------------------------
@@ -27,6 +28,7 @@ router.use(isAuthenticated);
 -----------------------------------*/
 router.use('/admin', admin);
 router.use('/user', user);
+router.use('/bulletinBoard', bulletinBoard)
 
 
 module.exports = router;

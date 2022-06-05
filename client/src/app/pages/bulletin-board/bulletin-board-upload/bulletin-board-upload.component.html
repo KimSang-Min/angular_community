@@ -2,22 +2,30 @@
     <mat-card>
         <mat-card-title>글쓰기</mat-card-title>
         <mat-card-content>
-          <form [formGroup]="uploadForm">
-            <p>
-              <mat-form-field >
-                <input type="text" matInput placeholder="제목" formControlName="title">
-              </mat-form-field>
-            </p>
-            <p>
-              <mat-form-field appearance="outline">
-                <textarea matInput placeholder="내용" formControlName="content" rows="30"></textarea>
-              </mat-form-field>
-            </p>
-    
-            <div class="button">
-              <button type="submit" mat-raised-button color="primary" [disabled]="!uploadForm.valid" (click)="save()">등록</button>
-            </div>
-          </form>
+            <form [formGroup]="uploadForm" #f="ngForm" (ngSubmit)="onSubmit(f.value)">
+                <p>
+                    <mat-form-field>
+                        <input type="text" matInput placeholder="제목" formControlName="title">
+                    </mat-form-field>
+                </p>
+                <p id="upload">
+                    <label>
+                        <mat-icon> attach_file</mat-icon>
+                        <input ngf-select type="file" (change)="onFileChange($event)" name="upload_file">
+                        <div class="choose_button_span"></div>
+                    </label>
+                </p>
+                <p>
+                    <mat-form-field appearance="outline">
+                        <textarea matInput placeholder="내용" formControlName="content" rows="30"></textarea>
+                    </mat-form-field>
+                </p>
+
+                <div class="button">
+                    <!-- <button type="submit" mat-raised-button color="primary" [disabled]="!uploadForm.valid">등록</button> -->
+                    <button type="submit" mat-raised-button color="primary">등록</button>
+                </div>
+            </form>
         </mat-card-content>
-      </mat-card>
+    </mat-card>
 </div>

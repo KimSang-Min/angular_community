@@ -9,15 +9,16 @@ import { map, Observable, startWith, Subject, takeUntil } from 'rxjs';
 import { DataStorageService } from 'src/@dw/services/store/data-storage.service';
 import * as moment from 'moment';
 import { CommonService } from 'src/@dw/services/common/common.service';
+import { BulletinBoardService } from 'src/@dw/services/bulletin-board/bulletin-board.service';
 
 
 export interface PeriodicElement {
-    startDate: Date;
-    endDate: Date;
-    name: string;
-    leaveType: string;
-    duration: number;
-    email: string;
+    index: string;
+    title: string;
+    writer: string;
+    date: string;
+    numberOfViews: number;
+    recommendation: number;
 }
 
 export interface Employees {
@@ -47,10 +48,10 @@ export class BulletinBoardListComponent implements OnInit {
     filteredOptions: Observable<Employees[]>;
 
     // view table
-    displayedColumns: string[] = ['index', 'title', 'writer', 'date', 'numberOfViews', 'Recommendation',];
+    displayedColumns: string[] = ['index', 'title', 'writer', 'date', 'numberOfViews', 'recommendation'];
     dataSource
 
-    contractForm: FormGroup
+    // contractForm: FormGroup
 
 
     searchStr = '';
@@ -68,47 +69,31 @@ export class BulletinBoardListComponent implements OnInit {
         private router: Router,
         private formBuilder: FormBuilder,
         public dialog: MatDialog,
-        // private contractMngmtService: ContractMngmtService,
+        private bulletinBoardService: BulletinBoardService,
         public dataStorageService: DataStorageService,
-        private commonService: CommonService,
         private snackbar: MatSnackBar,
+        
     ) { }
 
     ngOnInit(): void {
 
-        this.dataStorageService.userProfile.pipe(takeUntil(this.unsubscribe$)).subscribe(
-            async (data: any) => {
-
-                console.log(data)
-
-                this.userInfo = data;
-
-                if(this.userInfo != undefined) {
-                    this.getContractList();
-                }
-            },
-            (err: any) => {
-                console.log(err);
-            }
-        )
-
         const startOfMonth = moment().startOf('month').format();
         const endOfMonth = moment().endOf('month').format();
 
-        this.contractForm = this.formBuilder.group({
-            status: ['all', [
-                Validators.required,
-            ]],
-            start_date: [startOfMonth, [
-                Validators.required,
-            ]],
-            end_date: [endOfMonth, [
-                Validators.required,
-            ]]
-        });
+        // this.contractForm = this.formBuilder.group({
+        //     status: ['all', [
+        //         Validators.required,
+        //     ]],
+        //     start_date: [startOfMonth, [
+        //         Validators.required,
+        //     ]],
+        //     end_date: [endOfMonth, [
+        //         Validators.required,
+        //     ]]
+        // });
 
        
-        this.getContractList();
+        this.getbulletinBoardList();
     }
 
     ngOnDestroy() {
@@ -122,32 +107,14 @@ export class BulletinBoardListComponent implements OnInit {
     }
 
 
-    // 계약서 가져오기
-    getContractList() {
+    // 게시글 가져오기
+    getbulletinBoardList() {
 
-        // this.contractMngmtService.getContractList().subscribe((data: any) => {
-
-        //     ///////////////////// 검색 필터 ////////////////////
-        //     // 검색 필터 위해서 receiver 중복 값 제외 후 return
-        //     const userFilter = data.contractList.filter((item, i) => {
-        //         return (
-        //             data.contractList.findIndex((item2, j) => {
-        //               return item.receiver._id === item2.receiver._id;
-        //             }) === i
-        //         );
-        //     })
-        //     ////////////////////////////////////////////////////
-
-        //     console.log(data.contractList);
-        //     this.contractList = new MatTableDataSource<PeriodicElement>(data.contractList);
-        //     this.contractList.paginator = this.paginator;
-        //     this.options = userFilter
-        //     this.setAutoComplete();
-        // },
-        //     (err: any) => {
-        //         console.log(err);
-        //     }
-        // )
+        this.bulletinBoardService.getbulletinBoardList().subscribe((data:any)=> {
+            console.log(data)
+            this.contractList = new MatTableDataSource<PeriodicElement>(data);
+            this.contractList.paginator = this.paginator;
+        })
     }
 
 
@@ -158,65 +125,6 @@ export class BulletinBoardListComponent implements OnInit {
 
 
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    setAutoComplete() {
-        // auto complete
-        console.log(this.myControl.valueChanges)
-        this.filteredOptions = this.myControl.valueChanges
-            .pipe(
-                startWith(''),
-                map(value => typeof value === 'string' ? value : value.email),
-                // map((email: any) => email ? this._filter(email) : this.options.slice()) // 원래 코드
-                map((email: any) => email ? this.options.slice() : this.options.slice())
-            );
-    }
-
-    private _filter(email: string): Employees[] {
-        console.log(email)
-        const filterValue = email.toLowerCase();
-        return this.options.filter(option => option.email.toLowerCase().includes(filterValue));
-    }
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-    // 계약서 검색
-    getMyContractListSearch() {
-        
-        // const formValue = this.contractForm.value;
     
-        // const data = {
-        //     status: formValue.status,
-        //     start_date: this.commonService.dateFormatting(formValue.start_date),
-        //     end_date: this.commonService.dateFormatting(formValue.end_date),
-        //     email: this.myControl.value,
-        // }
-
-
-        // console.log(data)
-
-        // // 조건에 따른 사원들 휴가 가져오기
-        // this.contractMngmtService.getContractListSearch(data).subscribe(
-        //     (data: any) => {
-        //         console.log(data.contractList)
-
-        //         if (data.message == 'Success find document list') {
-        //             this.contractList = data.documentList
-        //         }
-
-        //         this.contractList = new MatTableDataSource<PeriodicElement>(data.contractList);
-        //         this.contractList.paginator = this.paginator;
-        //     }
-        // )
-
-        // this.snackbar.open('Successfully get leave search data','Close' ,{
-        //     duration: 3000,
-        //     horizontalPosition: "center"
-        // });
-    }
-
-    
-
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
