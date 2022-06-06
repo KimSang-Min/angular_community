@@ -19,6 +19,7 @@ const upload = multer({ storage });
 
 router.get('/getbulletinBoardList',  bulletinBoardController.getbulletinBoardList); // 게시글 가져오기
 router.post('/upload', upload.any(), bulletinBoardController.upload); // 게시글 업로드 
+router.get('/getbulletinBoardDetail',  bulletinBoardController.getbulletinBoardDetail); // 게시글 상세보기
 
 
 

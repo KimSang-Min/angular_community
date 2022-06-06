@@ -10,10 +10,11 @@ import { DataStorageService } from 'src/@dw/services/store/data-storage.service'
 import * as moment from 'moment';
 import { CommonService } from 'src/@dw/services/common/common.service';
 import { BulletinBoardService } from 'src/@dw/services/bulletin-board/bulletin-board.service';
+import { MatSort } from '@angular/material/sort';
 
 
 export interface PeriodicElement {
-    index: string;
+    index: number;
     title: string;
     writer: string;
     date: string;
@@ -64,6 +65,7 @@ export class BulletinBoardListComponent implements OnInit {
     }
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatSort) sort: MatSort;
 
     constructor(
         private router: Router,
@@ -114,13 +116,14 @@ export class BulletinBoardListComponent implements OnInit {
             console.log(data)
             this.contractList = new MatTableDataSource<PeriodicElement>(data);
             this.contractList.paginator = this.paginator;
+            this.contractList.sort = this.sort
         })
     }
 
 
     // Go to the page where you sign a contract
-    openContractSignPage(data) {
-        this.router.navigate([`/leave/contract-mngmt/contract-sign/${data._id}`]);
+    openBulletinBoardDetail(data) {
+        this.router.navigate([`/bulletin/detail/${data._id}`]);
     }
 
 

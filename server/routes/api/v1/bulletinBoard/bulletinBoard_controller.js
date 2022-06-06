@@ -9,6 +9,7 @@ const bucket = global.AWS_S3.bucket;
 
 
 
+// 게시글 가져오기
 exports.getbulletinBoardList = async (req, res) => {
     console.log(`
 --------------------------------------------------
@@ -20,7 +21,7 @@ exports.getbulletinBoardList = async (req, res) => {
 
 	try {
 
-		const bulletinBoardList = await dbModels.BulletinBoard.find();
+		const bulletinBoardList = await dbModels.BulletinBoard.find().sort({"_id": -1});
 
 		if (!bulletinBoardList) {
 			return res.status(401).send({
@@ -56,7 +57,9 @@ exports.upload = async (req, res) => {
             _id: req.decoded._id
         });
 
-    console.log(writerInfo)
+    const bulletinBoardList = await dbModels.BulletinBoard.find()
+
+
 
     try {
         if (req.body.upload_file != '') {
@@ -66,6 +69,7 @@ exports.upload = async (req, res) => {
                 const buffer = Buffer.alloc(req.files[0].size);
                 fs.read(fd, buffer, 0, buffer.length, null, function (err, bytes, buffer) {
                     const obj = {
+                        "number": bulletinBoardList.length + 1,
                         "title": req.body.title,
                         "content": req.body.content,
                         "writer._id": writerInfo._id,
@@ -73,11 +77,13 @@ exports.upload = async (req, res) => {
                         "writer.name": writerInfo.name,
                         "writer.isManager": writerInfo.isManager,
                         "originalFileName": req.files[0].originalname,
+                        "fileName": req.files[0].filename,
                         "filePath": req.files[0].path,
                         "fileSize": req.files[0].size,
                         "file": buffer,
                         "numberOfViews": 0,
-                        "recommendation": 0
+                        "recommendation": 0,
+                        "opposite": 0,
                     };
 
                     const upload = dbModels.BulletinBoard(obj);
@@ -97,6 +103,7 @@ exports.upload = async (req, res) => {
             })
         } else {
             const obj = {
+                "number": bulletinBoardList.length + 1,
                 "title": req.body.title,
                 "content": req.body.content,
                 "writer._id": writerInfo._id,
@@ -104,7 +111,8 @@ exports.upload = async (req, res) => {
                 "writer.name": writerInfo.name,
                 "writer.isManager": writerInfo.isManager,
                 "numberOfViews": 0,
-                "recommendation": 0
+                "recommendation": 0,
+                "opposite": 0,
             };
             const upload = dbModels.BulletinBoard(obj);
             upload.save(function (err) { // 저장
@@ -122,4 +130,54 @@ exports.upload = async (req, res) => {
         console.log(err);
         return res.status(500).send('db Error');
     }
+};
+
+
+// 게시글 상세보기
+exports.getbulletinBoardDetail = async (req, res) => {
+    console.log(`
+--------------------------------------------------
+  User : ${req.decoded._id}
+  router.get('/getbulletinBoardDetail', bulletinBoardController.getbulletinBoardDetail);
+--------------------------------------------------`);
+
+    const dbModels = global.DB_MODELS;
+
+    
+    
+
+	try {
+
+		const bulletinBoardInfo = await dbModels.BulletinBoard.findOne({
+            "_id": req.query._id
+        });
+
+
+        
+        fs.writeFileSync(`uploads/bulletinBoardFile/${bulletinBoardInfo.fileName}`, bulletinBoardInfo.file)
+
+		if (!bulletinBoardInfo) {
+			return res.status(401).send({
+				message: 'An error has occurred'
+			})
+		}
+        
+        
+        return res.send(
+            bulletinBoardInfo
+        )
+
+        // db에 모든 작업이 올라간 후에 uploads에 있는 파일이 지워진다.
+        // fs.unlink(`uploads/bulletinBoardFile/${bulletinBoardInfo.fileName}`, function () { }) // 파일 삭제)
+        
+
+        
+
+		// return res.send(
+        //     bulletinBoardInfo
+        // )
+	} catch (err) {
+		console.log(err);
+		return res.status(500).send('db Error');
+	}
 };

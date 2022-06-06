@@ -3,6 +3,9 @@ const mongoose = require('mongoose');
 
 const bulletinBoardScehma = mongoose.Schema(
 	{
+        number: {
+            type: Number
+        },
 		title: {
 			type: String
 		},
@@ -27,6 +30,9 @@ const bulletinBoardScehma = mongoose.Schema(
         originalFileName: {
             type: String
         },
+        fileName: {
+            type: String
+        },
         filePath: {
             type: String
         },
@@ -40,6 +46,9 @@ const bulletinBoardScehma = mongoose.Schema(
             type: Number
         },
         recommendation: {
+            type: Number
+        },
+        opposite: {
             type: Number
         }
         

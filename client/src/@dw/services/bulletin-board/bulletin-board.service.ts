@@ -21,4 +21,9 @@ export class BulletinBoardService {
     uploadBulletinBoard(data) {
 		return this.http.post('/api/v1/bulletinBoard/upload', data);
 	}
+
+    // 게시글 디테일
+    getbulletinBoardDetail(data) {
+        return this.http.get('/api/v1/bulletinBoard/getbulletinBoardDetail', {params: data._id});
+    }
 }

@@ -1,0 +1,50 @@
+// post.component.css
+/* 페이지 전체 요소에 적용. 박스 사이즈를 테두리를 포함한 크기로 지정 */
+* {
+    box-sizing: border-box;
+}
+
+mat-divider {
+    margin: 30px 0;
+}
+
+/* 박스 스타일 지정 */
+.wrapper {
+    flex-direction: column;
+    padding: 80px 80px 30px 80px;
+    height: 100vh;
+    overflow: auto;
+}
+
+.main_content_img {
+    text-align: center;
+}
+.upload_img {
+    width: 50%;
+}
+
+.header_wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.main_content_img {
+    margin-bottom: 20px;
+}
+
+.main_content_text {
+
+}
+
+.comment_content {
+}
+
+.comment_write {
+    min-height: 100px;
+}
+
+
+
+
+
+

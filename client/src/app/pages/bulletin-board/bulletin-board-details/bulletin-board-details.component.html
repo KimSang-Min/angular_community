@@ -1,1 +1,42 @@
-<p>bulletin-board-details works!</p>
+<div class="wrapper">
+    <div class="header">
+        <h2>{{ bulletinBoardInfo?.title }}</h2>
+        <div class="header_wrapper">
+            <div>
+                <span>{{ bulletinBoardInfo?.writer.name }}</span>
+            </div>
+            <div>
+                <span>조회 {{bulletinBoardInfo?.numberOfViews}} | </span>
+                <span>추천 {{bulletinBoardInfo?.recommendation}} | </span>
+                <span>댓글</span>
+            </div>
+        </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="main_content_img">
+        <img class="upload_img" [src]="uploadImg" alt="">
+    </div>
+
+    <div class="main_content_text">
+        {{bulletinBoardInfo?.content}}
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="recommendation">
+        <button>추천 {{bulletinBoardInfo?.recommendation}}</button>
+        <button>반대 {{bulletinBoardInfo?.opposite}}</button>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="comment_content">
+        <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. -->
+    </div>
+    <div class="comment_write">
+        <!-- <button>댓글작성</button> -->
+
+    </div>
+</div>
