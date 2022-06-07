@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BulletinBoardService } from 'src/@dw/services/bulletin-board/bulletin-board.service';
+import { SocketioService } from 'src/@dw/services/socketio/socketio.service';
 
 @Component({
     selector: 'app-bulletin-board-details',
@@ -9,6 +10,7 @@ import { BulletinBoardService } from 'src/@dw/services/bulletin-board/bulletin-b
 })
 export class BulletinBoardDetailsComponent implements OnInit {
 
+    private socket;
     public params: any;
     bulletinBoardInfo;
     uploadImg;
@@ -16,7 +18,10 @@ export class BulletinBoardDetailsComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private bulletinBoardService: BulletinBoardService,
-    ) { }
+        private socketService: SocketioService,
+    ) { 
+        this.socket = socketService.socket;
+    }
 
     ngOnInit(): void {
 
@@ -38,7 +43,6 @@ export class BulletinBoardDetailsComponent implements OnInit {
         this.bulletinBoardService.getbulletinBoardDetail(data).subscribe((data:any)=> {
             this.bulletinBoardInfo = data;  
             
-            console.log(data.fileName)
             this.uploadImg = `http://localhost:3300/uploads/bulletinBoardFile/${data.fileName}`
         })
     }

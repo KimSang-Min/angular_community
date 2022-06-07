@@ -63,6 +63,11 @@ exports.upload = async (req, res) => {
 
     try {
         if (req.body.upload_file != '') {
+            try {
+                
+            } catch (error) {
+                
+            }
             // 파일시스템에서 파일 열기
             fs.open(req.files[0].path, "r", function (err, fd) {
                 // binary 데이터를 저장하기 위해 파일 사이즈 만큼의 크기를 갖는 Buffer 객체 생성
@@ -87,20 +92,21 @@ exports.upload = async (req, res) => {
                     };
 
                     const upload = dbModels.BulletinBoard(obj);
-                    upload.save(function (err) { // 저장
+                    upload.save(async function (err) { // 저장
                         if (err) {
                             res.send(err);
                         } else {
                             res.send({
-                                message: 'success upload'
+                                message: 'success upload',
+                                fileName: req.files[0].filename
                             })
                         }
-
-                        // db에 모든 작업이 올라간 후에 uploads에 있는 파일이 지워진다.
-                        fs.unlink(req.files[0].path, function () { }) // 파일 삭제
+                        
                     });
                 })
             })
+            // fs.unlink(req.files[0].path, function () { }) // 파일 삭제)
+            
         } else {
             const obj = {
                 "number": bulletinBoardList.length + 1,
@@ -123,7 +129,7 @@ exports.upload = async (req, res) => {
                         message: 'success upload'
                     })
                 }
-            });
+            })
         }
 
     } catch (err) {
@@ -143,18 +149,22 @@ exports.getbulletinBoardDetail = async (req, res) => {
 
     const dbModels = global.DB_MODELS;
 
-    
-    
-
 	try {
+        
 
-		const bulletinBoardInfo = await dbModels.BulletinBoard.findOne({
-            "_id": req.query._id
-        });
+    
+		const bulletinBoardInfo = await dbModels.BulletinBoard.findOneAndUpdate(
+            {
+                "_id": req.query._id
+            }, 
+            { 
+                $inc: {numberOfViews: 1}  // 조회수 증가
+            }
+        );
 
 
         
-        fs.writeFileSync(`uploads/bulletinBoardFile/${bulletinBoardInfo.fileName}`, bulletinBoardInfo.file)
+        fs.writeFileSync(`./uploads/bulletinBoardFile/${bulletinBoardInfo.fileName}`, bulletinBoardInfo.file)
 
 		if (!bulletinBoardInfo) {
 			return res.status(401).send({

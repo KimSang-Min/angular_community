@@ -114,7 +114,7 @@ const socketCommunity = wsServer.of('/socketCommunity');
 const chat = require('./controllers/chatting/socketHandler-chat')
 
 socketCommunity.on('connection', (socket) => {
-    chat(wsServer, socket, app)
+    chat(wsServer, socket, app);
 });
 
 

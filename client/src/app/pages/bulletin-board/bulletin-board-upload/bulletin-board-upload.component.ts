@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs';
 import { DialogService } from 'src/@dw/dialog/dialog.service';
 import { BulletinBoardService } from 'src/@dw/services/bulletin-board/bulletin-board.service';
+import { SocketioService } from 'src/@dw/services/socketio/socketio.service';
 import { DataStorageService } from 'src/@dw/services/store/data-storage.service';
 
 @Component({
@@ -14,6 +15,7 @@ import { DataStorageService } from 'src/@dw/services/store/data-storage.service'
 })
 export class BulletinBoardUploadComponent implements OnInit {
 
+    private socket;
     public fileData: File;
     boardName: string;
     uploadForm: FormGroup;
@@ -25,7 +27,11 @@ export class BulletinBoardUploadComponent implements OnInit {
         private bulletinBoardService: BulletinBoardService,
         private dialogService: DialogService,
         private dataStorageService: DataStorageService,
+        private socketService: SocketioService,
     ) {
+
+        this.socket = socketService.socket;
+
         this.uploadForm = this.formBuilder.group({
             title: new FormControl('', [Validators.required]),
             content: new FormControl('', [Validators.required]),
@@ -65,6 +71,7 @@ export class BulletinBoardUploadComponent implements OnInit {
             if (result) {
                 this.bulletinBoardService.uploadBulletinBoard(formData).subscribe((data: any) => {
                     if (data.message == 'success upload') {
+                        console.log(data)
                         this.router.navigate(['bulletin/list']);
                     }
                 })
