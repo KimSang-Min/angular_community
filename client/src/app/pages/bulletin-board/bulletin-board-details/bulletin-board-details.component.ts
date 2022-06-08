@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DialogService } from 'src/@dw/dialog/dialog.service';
 import { BulletinBoardService } from 'src/@dw/services/bulletin-board/bulletin-board.service';
 import { SocketioService } from 'src/@dw/services/socketio/socketio.service';
 
@@ -10,7 +11,6 @@ import { SocketioService } from 'src/@dw/services/socketio/socketio.service';
 })
 export class BulletinBoardDetailsComponent implements OnInit {
 
-    private socket;
     public params: any;
     bulletinBoardInfo;
     uploadImg;
@@ -18,9 +18,8 @@ export class BulletinBoardDetailsComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private bulletinBoardService: BulletinBoardService,
-        private socketService: SocketioService,
+        private dialogService: DialogService,
     ) { 
-        this.socket = socketService.socket;
     }
 
     ngOnInit(): void {
@@ -42,9 +41,43 @@ export class BulletinBoardDetailsComponent implements OnInit {
 
         this.bulletinBoardService.getbulletinBoardDetail(data).subscribe((data:any)=> {
             this.bulletinBoardInfo = data;  
+            if(data.fileName) {
+                this.uploadImg = `http://localhost:3300/uploads/bulletinBoardFile/${data.fileName}`
+            }
             
-            this.uploadImg = `http://localhost:3300/uploads/bulletinBoardFile/${data.fileName}`
         })
     }
 
+
+    // 게시글 추천
+    recommendation() {
+
+        const data = {
+            _id : this.params
+        }
+
+        this.dialogService.openDialogConfirm(`추천하시겠습니까?`).subscribe((result)=> {
+            if(result) {
+                this.bulletinBoardService.recommendation(data).subscribe((data)=> {
+                    this.getbulletinBoardDetail();
+                })
+            }
+        })
+    }
+
+    // 게시글 반대
+    opposite() {
+
+        const data = {
+            _id : this.params
+        }
+
+        this.dialogService.openDialogConfirm(`반대하시겠습니까?`).subscribe((result)=> {
+            if(result) {
+                this.bulletinBoardService.opposite(data).subscribe((data)=> {
+                    this.getbulletinBoardDetail();
+                })
+            }
+        })
+    }
 }

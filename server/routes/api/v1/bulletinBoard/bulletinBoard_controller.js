@@ -21,7 +21,7 @@ exports.getbulletinBoardList = async (req, res) => {
 
 	try {
 
-		const bulletinBoardList = await dbModels.BulletinBoard.find().sort({"_id": -1});
+		const bulletinBoardList = await dbModels.BulletinBoard.find({}, {file: 0}).sort({"_id": -1});
 
 		if (!bulletinBoardList) {
 			return res.status(401).send({
@@ -59,19 +59,23 @@ exports.upload = async (req, res) => {
 
     const bulletinBoardList = await dbModels.BulletinBoard.find()
 
+    
 
 
     try {
         if (req.body.upload_file != '') {
-            try {
-                
-            } catch (error) {
-                
-            }
+
+            const data = req.files[0];
+            const resizePath = 'uploads/bulletinBoardFile/' + data.filename;
+           
+
+            // 이미지 리사이즈 작업 -> 원본을 리사이즈한 뒤에 원본을 제거
+            await sharp(data.path).resize(300, 300).toFile(resizePath);
+
             // 파일시스템에서 파일 열기
-            fs.open(req.files[0].path, "r", function (err, fd) {
+            fs.open(data.path, "r", function (err, fd) {
                 // binary 데이터를 저장하기 위해 파일 사이즈 만큼의 크기를 갖는 Buffer 객체 생성
-                const buffer = Buffer.alloc(req.files[0].size);
+                const buffer = Buffer.alloc(data.size);
                 fs.read(fd, buffer, 0, buffer.length, null, function (err, bytes, buffer) {
                     const obj = {
                         "number": bulletinBoardList.length + 1,
@@ -81,10 +85,10 @@ exports.upload = async (req, res) => {
                         "writer.email": writerInfo.email,
                         "writer.name": writerInfo.name,
                         "writer.isManager": writerInfo.isManager,
-                        "originalFileName": req.files[0].originalname,
-                        "fileName": req.files[0].filename,
-                        "filePath": req.files[0].path,
-                        "fileSize": req.files[0].size,
+                        "originalFileName": data.originalname,
+                        "fileName": data.filename,
+                        "filePath": data.path,
+                        "fileSize": data.size,
                         "file": buffer,
                         "numberOfViews": 0,
                         "recommendation": 0,
@@ -98,14 +102,14 @@ exports.upload = async (req, res) => {
                         } else {
                             res.send({
                                 message: 'success upload',
-                                fileName: req.files[0].filename
+                                fileName: data.filename
                             })
                         }
                         
                     });
                 })
             })
-            // fs.unlink(req.files[0].path, function () { }) // 파일 삭제)
+            await unlinkAsync(data.path);  // 파일 삭제)
             
         } else {
             const obj = {
@@ -164,7 +168,7 @@ exports.getbulletinBoardDetail = async (req, res) => {
 
 
         
-        fs.writeFileSync(`./uploads/bulletinBoardFile/${bulletinBoardInfo.fileName}`, bulletinBoardInfo.file)
+        // fs.writeFileSync(`./uploads/bulletinBoardFile/${bulletinBoardInfo.fileName}`, bulletinBoardInfo.file)
 
 		if (!bulletinBoardInfo) {
 			return res.status(401).send({
@@ -176,16 +180,89 @@ exports.getbulletinBoardDetail = async (req, res) => {
         return res.send(
             bulletinBoardInfo
         )
-
-        // db에 모든 작업이 올라간 후에 uploads에 있는 파일이 지워진다.
-        // fs.unlink(`uploads/bulletinBoardFile/${bulletinBoardInfo.fileName}`, function () { }) // 파일 삭제)
-        
-
         
 
 		// return res.send(
         //     bulletinBoardInfo
         // )
+	} catch (err) {
+		console.log(err);
+		return res.status(500).send('db Error');
+	}
+};
+
+
+// 게시글 추천
+exports.recommendation = async (req, res) => {
+    console.log(`
+--------------------------------------------------
+  User : ${req.decoded._id}
+  router.post('/recommendation',  bulletinBoardController.recommendation)
+--------------------------------------------------`);
+
+    const dbModels = global.DB_MODELS;
+    const data = req.body;
+
+    console.log(data)
+
+	try {
+
+		const bulletinBoardInfo = await dbModels.BulletinBoard.findOneAndUpdate(
+            {
+                "_id": data._id
+            }, 
+            { 
+                $inc: {recommendation: 1}  // 추천 증가
+            }
+        );
+
+		if (!bulletinBoardInfo) {
+			return res.status(401).send({
+				message: 'An error has occurred'
+			});
+		}
+
+		return res.send(
+            bulletinBoardInfo
+        );
+	} catch (err) {
+		console.log(err);
+		return res.status(500).send('db Error');
+	}
+};
+
+
+// 게시글 반대
+exports.opposite = async (req, res) => {
+    console.log(`
+--------------------------------------------------
+  User : ${req.decoded._id}
+  router.post('/opposite',  bulletinBoardController.opposite)
+--------------------------------------------------`);
+
+    const dbModels = global.DB_MODELS;
+    const data = req.body;
+
+	try {
+
+		const bulletinBoardInfo = await dbModels.BulletinBoard.findOneAndUpdate(
+            {
+                "_id": data._id
+            }, 
+            { 
+                $inc: {opposite: 1}  // 반대 증가
+            }
+        );
+
+		if (!bulletinBoardInfo) {
+			return res.status(401).send({
+				message: 'An error has occurred'
+			});
+		}
+
+		return res.send(
+            bulletinBoardInfo
+        );
 	} catch (err) {
 		console.log(err);
 		return res.status(500).send('db Error');

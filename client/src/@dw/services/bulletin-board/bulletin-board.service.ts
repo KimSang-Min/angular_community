@@ -26,4 +26,14 @@ export class BulletinBoardService {
     getbulletinBoardDetail(data) {
         return this.http.get('/api/v1/bulletinBoard/getbulletinBoardDetail', {params: data._id});
     }
+
+    // 게시글 추천
+    recommendation(data) {
+        return this.http.post('/api/v1/bulletinBoard/recommendation', data._id);
+    }
+
+    // 게시글 반대
+    opposite(data) {
+        return this.http.post('/api/v1/bulletinBoard/opposite', data._id);
+    }
 }

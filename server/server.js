@@ -111,7 +111,7 @@ const socketCommunity = wsServer.of('/socketCommunity');
 /*-----------------------------------------------
     Socket event handler
 -----------------------------------------------*/
-const chat = require('./controllers/chatting/socketHandler-chat')
+const chat = require('./controllers/chatting/socketHandler-chat');
 
 socketCommunity.on('connection', (socket) => {
     chat(wsServer, socket, app);

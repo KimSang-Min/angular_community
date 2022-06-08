@@ -1,6 +1,7 @@
 /env
 /config/S3config.json
 /backup
+/upload/bulletinBoardFile/
 
 # dependencies
 /node_modules

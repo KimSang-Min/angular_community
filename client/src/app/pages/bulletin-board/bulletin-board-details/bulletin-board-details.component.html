@@ -26,8 +26,8 @@
     <mat-divider></mat-divider>
 
     <div class="recommendation">
-        <button>추천 {{bulletinBoardInfo?.recommendation}}</button>
-        <button>반대 {{bulletinBoardInfo?.opposite}}</button>
+        <button mat-raised-button class="recommendationBtn" (click)="recommendation()">추천 {{bulletinBoardInfo?.recommendation}}</button>
+        <button mat-raised-button class="oppositeBtn" (click)="opposite()">반대 {{bulletinBoardInfo?.opposite}}</button>
     </div>
 
     <mat-divider></mat-divider>
