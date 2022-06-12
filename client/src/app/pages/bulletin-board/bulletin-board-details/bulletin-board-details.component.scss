@@ -40,7 +40,7 @@ mat-divider {
 
 .comment_container {
     border-top: 1px solid gray;
-    padding: 25px 30px;
+    padding: 0 30px 25px 30px;
 }
 
 
@@ -48,74 +48,82 @@ mat-divider {
 .comment_content {
 
     margin-bottom: 10px;
-    padding-bottom: 20px;
     border-bottom: solid 1px #dbdbdb;
-    border-bottom: solid 1px black;
-    // height: 40px;
 
     // 댓글
     .comment_content_inner {
         width: 100%;
         display: flex;
+        flex-direction: column;
 
-        .comment_name {
-            float: left;
-            width: 130px;
-            margin-right: 33px;
-            margin-top: 3px;
-            line-height: 25px;
-        }
+        .comment_inner {
+
+            display: flex;
+            line-height: 50px;
+            border-bottom: solid 1px #e0e0e0;
+            
+
+            .comment_name {
+                width: 110px;
+            }
+        
+            .comment_comment {
+                width: 710px;
+                word-break: break-all;
+            }
+        
+            .comment_createdAt {
+                font-size: 12px;
+                color: #999;
+                width: 100px;
+                margin-left: 15px;
+            }
     
-        .comment_comment {
-            width: 620px;
-            // float: left;
-            // line-height: 33px;
-        }
-    
-        .comment_createdAt {
-            float: right;
-            font-size: 12px;
-            color: #999;
-            width: 100px;
-            // vertical-align: top;
-            // margin-top: 1px;
-            // line-height: 30px;
+            .replyBtn {
+                margin-left: 20px;
+            }
         }
 
-        .replyBtn {
-            margin-left: 20px;
+        .comment_inner:hover {
+            cursor: pointer;
         }
     }
 
     // 답글
     .replyComment_inner {
-        // width: 80%;
-        right: 0;
-        margin-left: 90px;
-
-
+        margin: 0px 0 0px 30px;
+        padding: 0px 0 0;
+        border: 1px solid #ddd;
+        background: #fafafa;
+        border-width: 0 1px 1px 1px;
+        line-height: 50px;
+        display: flex;
+        
         .replyComment_name {
-            // float: left;
-            width: 130px;
-            margin-right: 33px;
-            margin-top: 3px;
-            line-height: 25px;
+            width: 110px;
+            padding-left: 10px
         }
-    
+        
         .replyComment_comment {
-            width: 620px;
-            // float: left;
-            // line-height: 33px;
+            width: 710px;
+            word-break: break-all;
         }
-    
+
         .replyComment_createdAt {
-            float: right;
             font-size: 12px;
             color: #999;
             width: 100px;
-            // vertical-align: top;
-            // margin-top: 1px;
-            // line-height: 30px;
+            margin-left: 15px;
+        }
+
+        .replyComment_comment::before {
+            content: "┖  ";
+            color: #004a9f;
+        }
+    
+    
+        .replyComment_createdAt {
+          
         }
     }
 
@@ -131,8 +139,15 @@ mat-divider {
 }
 
 .comment_write {
-    margin-top: 20px;
+    padding-top: 50px;
     min-height: 100px;
+    background: #fafafa;
+    border-bottom: 1px solid;
+}
+
+.comment_writer {
+    padding: 0 0 10px 35px;
+    font-weight: 600;
 }
 
 .recommendation {
@@ -152,6 +167,7 @@ mat-divider {
     margin-right: 20px;
     width: 90px;
     margin: 0 auto;
+    margin-bottom: 20px;
 }
 
 .replyCommentBtn {
@@ -159,7 +175,7 @@ mat-divider {
     color: black;
     margin-right: 20px;
     width: 90px;
-    margin: 0 auto;
+    margin: 0 auto 10px;
 }
 
 
@@ -170,6 +186,11 @@ mat-divider {
 
     .mat-input-element {
         color: slategray;
+        background-color: white;
+    }
+
+    .mat-form-field-flex {
+        background-color: white;
     }
 
     .mat-form-field-label {
@@ -190,6 +211,8 @@ mat-divider {
 
     .mat-form-field-flex {
         height: 110px;
+        width: 93%;
+        margin: 0 30px;
     }
 }
 

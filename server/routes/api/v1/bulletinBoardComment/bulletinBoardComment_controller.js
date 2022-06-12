@@ -100,11 +100,12 @@ exports.saveBulletinBoarReplyComment = async (req, res) => {
                         'reply_id': data.writer_id,
                         'reply_name': data.writer_name,
                         'reply_comment': data.replyComment,
+                        'createdAt': data.createdAt
                     }
                 }
             },
             {
-                upsert: true ,
+                upsert: true,
             }
         );
 

@@ -30,8 +30,12 @@ const bulletinBoardCommentScehma = mongoose.Schema(
                 },
                 reply_comment: {
                     type: String
+                },
+                createdAt: {
+                    type: Date
                 }
-            }
+
+            },
         ] 
 	},
 	{

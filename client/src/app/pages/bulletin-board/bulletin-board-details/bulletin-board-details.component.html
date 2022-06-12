@@ -39,36 +39,35 @@
 
         <div class="comment_content" *ngFor="let comment of comments let i = index">
             <div class="comment_content_inner">
-                <div class="comment_inner">
-                    <span class="comment_name">
+                <div class="comment_inner" (click)="createReply(i)">
+                    <div class="comment_name">
                         {{comment.writer_name}}
-                    </span>
-                    <span class="comment_comment">
-                        {{comment.comment}}
-                    </span>
-                    <span class="comment_createdAt">
-                        {{comment.createdAt | date: 'MM-dd / HH:MM:SS'}}
-                    </span>
-                    <div class="replyBtn" (click)="createReply(i)">
-                        <button mat-raised-button>답글</button>
                     </div>
+                    <div class="comment_comment">
+                        {{comment.comment}}
+                    </div>
+                    <div class="comment_createdAt">
+                        {{comment.createdAt | date: 'MM-dd / HH:MM:SS'}}
+                    </div>
+                    <!-- <div class="replyBtn" (click)="createReply(i)">
+                        <button mat-raised-button>답글</button>
+                    </div> -->
                 </div>
                 
-                <mat-divider></mat-divider>
 
-                <div>
-                    <div  class="replyComment_inner" *ngFor="let replies of comments[i].reply let j = index">
-                        <div class="replyComment_name">
-                            {{replies.reply_name}}
-                        </div>
-                        <div class="replyComment_comment">
-                            {{replies.reply_comment}}
-                        </div>
-                        <!-- <span class="replyComment_createdAt">
-                            {{replies.createdAt | date: 'MM-dd / HH:MM:SS'}}
-                        </span> -->
+              
+                <div  class="replyComment_inner" *ngFor="let replies of comments[i].reply let j = index">
+                    <div class="replyComment_name">
+                        {{replies.reply_name}}
                     </div>
+                    <div class="replyComment_comment">
+                        {{replies.reply_comment}}
+                    </div>
+                    <span class="replyComment_createdAt">
+                        {{replies.createdAt | date: 'MM-dd / HH:MM:SS'}}
+                    </span>
                 </div>
+           
                 
             </div>
            
@@ -95,6 +94,9 @@
 
         <div class="comment_write">
             <mat-card-content>
+                <div class="comment_writer">
+                    작성자 {{this.bulletinBoardInfo?.writer.name}}
+                </div>
                 <form [formGroup]="commentForm" class="example-form">
                     <mat-form-field class="example-full-width" appearance="outline">
                         <input matInput type="text" formControlName="comment" placeholder="댓글을 입력하세요." required>
