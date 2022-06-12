@@ -19,12 +19,18 @@ export class BulletinBoardDetailsComponent implements OnInit {
 
 
     public params: any;
-    bulletinBoardInfo;
-    uploadImg;
+    bulletinBoardInfo; // 게시글 상세보기
+    uploadImg; 
     userProfileData;
-    comments;
+    comments; // 게시글의 댓글 정보
+    replyComments; // 게시글 답글 정보
 
+    commentInfo; // 답글 시 부모 댓글 정보
+    
+    visible_reply=[]; // 답글 버튼 클릭 시 ngClass 위해
+    
     commentForm: FormGroup;
+    replyCommentForm: FormGroup;
 
     constructor(
         private route: ActivatedRoute,
@@ -35,6 +41,10 @@ export class BulletinBoardDetailsComponent implements OnInit {
     ) { 
         this.commentForm = this.formBuilder.group({
             comment: ['', [Validators.required]],
+        });
+
+        this.replyCommentForm = this.formBuilder.group({
+            replyComment: ['', [Validators.required]],
         });
     }
 
@@ -120,6 +130,9 @@ export class BulletinBoardDetailsComponent implements OnInit {
 
         this.bulletinBoardService.getComment(data).subscribe((data)=> {
             this.comments = data;
+
+            console.log(this.comments)
+            console.log(this.comments.reply)
         })
     }
 
@@ -127,9 +140,7 @@ export class BulletinBoardDetailsComponent implements OnInit {
 
     // 댓글 등록
     saveComment() {
-        console.log(this.commentForm.value)
 
-        console.log(this.userProfileData)
         const data = {
             bulletinBoard_id: this.params._id,
             writer_id: this.userProfileData._id,
@@ -147,5 +158,39 @@ export class BulletinBoardDetailsComponent implements OnInit {
             }
         })
         
+    }
+
+    // 답글 생성
+    createReply(index) {
+
+        for(let i=0; i < this.comments.length; i++) {
+            this.visible_reply.push(i)
+        }
+        
+        this.visible_reply[index] = true;
+    }
+
+
+    // 답글 작성
+    saveReplyComment(commentInfo) {
+
+        // 부모 댓글 _id, 답글 작성자 정보, 답글 content
+        const data = {
+            bulletinBoard_id: this.params._id, // 게시글 _id
+            comment_id: commentInfo._id, // 댓글 _id
+            writer_id: this.userProfileData._id, // 작성자 _id
+            writer_name: this.userProfileData.name, // 작성자 이름
+            replyComment: this.replyCommentForm.value.replyComment // 작성 내용
+        }
+
+
+        console.log(data)
+
+
+        this.bulletinBoardService.saveReplyComment(data).subscribe((data:any)=> {
+            if(data.message == 'Success saved reply comment') {
+                this.getComment();
+            }
+        })
     }
 }

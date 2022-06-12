@@ -46,4 +46,9 @@ export class BulletinBoardService {
     saveComment(data) {
         return this.http.post('/api/v1/bulletinBoardComment/saveBulletinBoarComment', data);
     }
+
+    // 답글 작성
+    saveReplyComment(data) {
+        return this.http.post('/api/v1/bulletinBoardComment/saveBulletinBoarReplyComment', data);
+    }
 }

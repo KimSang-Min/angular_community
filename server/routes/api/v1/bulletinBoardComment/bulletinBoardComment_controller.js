@@ -26,18 +26,18 @@ exports.saveBulletinBoarComment = async (req, res) => {
     }
 
 
-	try {
+    try {
 
         const comment = await dbModels.BulletinBoardComment(commentData)
-		await comment.save();
+        await comment.save();
 
-		return res.send(
+        return res.send(
             comment
         );
-	} catch (err) {
-		console.log(err);
-		return res.status(500).send('db Error');
-	}
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send('db Error');
+    }
 };
 
 
@@ -56,24 +56,68 @@ exports.getBulletinBoarComment = async (req, res) => {
 
     try {
 
-		const bulletinBoardCommentList = await dbModels.BulletinBoardComment.find({bulletinBoard_id: data._id}, {_id: 0, bulletinBoard_id: 0});
+        const bulletinBoardCommentList = await dbModels.BulletinBoardComment.find({ bulletinBoard_id: data._id }, { bulletinBoard_id: 0 });
 
-        console.log(bulletinBoardCommentList)
+        if (!bulletinBoardCommentList) {
+            return res.status(401).send({
+                message: 'An error has occurred'
+            });
+        }
 
-
-		if (!bulletinBoardCommentList) {
-			return res.status(401).send({
-				message: 'An error has occurred'
-			});
-		}
-
-		return res.send(
+        return res.send(
             bulletinBoardCommentList
         );
-	} catch (err) {
-		console.log(err);
-		return res.status(500).send('db Error');
-	}
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send('db Error');
+    }
+};
+
+
+
+// 답글 등록
+exports.saveBulletinBoarReplyComment = async (req, res) => {
+    console.log(`
+--------------------------------------------------
+  User : ${req.decoded._id}
+  router.post('/saveBulletinBoarReplyComment',  bulletinBoardCommentController.saveBulletinBoarReplyComment);
+--------------------------------------------------`);
+
+    const dbModels = global.DB_MODELS;
+
+    const data = req.body;
+
+
+    try {
+
+        const updateReplyComment = await dbModels.BulletinBoardComment.findOneAndUpdate({
+                _id: data.comment_id 
+            },
+            {
+                $push: { 
+                    reply: {
+                        'comment_id': data.comment_id,
+                        'reply_id': data.writer_id,
+                        'reply_name': data.writer_name,
+                        'reply_comment': data.replyComment,
+                    }
+                }
+            },
+            {
+                upsert: true ,
+            }
+        );
+
+
+        console.log(updateReplyComment)
+
+        return res.send({
+            message: 'Success saved reply comment'
+        });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send('db Error');
+    }
 };
 
 
