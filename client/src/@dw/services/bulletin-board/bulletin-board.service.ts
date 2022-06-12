@@ -36,4 +36,14 @@ export class BulletinBoardService {
     opposite(data) {
         return this.http.post('/api/v1/bulletinBoard/opposite', data._id);
     }
+
+    // 댓글 가져오기
+    getComment(data) {
+        return this.http.get('/api/v1/bulletinBoardComment/getBulletinBoarComment', {params: data._id});
+    }
+
+    // 댓글 작성
+    saveComment(data) {
+        return this.http.post('/api/v1/bulletinBoardComment/saveBulletinBoarComment', data);
+    }
 }

@@ -26,17 +26,47 @@
     <mat-divider></mat-divider>
 
     <div class="recommendation">
-        <button mat-raised-button class="recommendationBtn" (click)="recommendation()">추천 {{bulletinBoardInfo?.recommendation}}</button>
+        <button mat-raised-button class="recommendationBtn" (click)="recommendation()">추천
+            {{bulletinBoardInfo?.recommendation}}</button>
         <button mat-raised-button class="oppositeBtn" (click)="opposite()">반대 {{bulletinBoardInfo?.opposite}}</button>
     </div>
 
-    <mat-divider></mat-divider>
+    <!-- <mat-divider></mat-divider> -->
 
-    <div class="comment_content">
-        <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. -->
-    </div>
-    <div class="comment_write">
-        <!-- <button>댓글작성</button> -->
+    <span>전체 댓글 {{comments.length}}개</span>
+    <div class="comment_container">
+        <div class="comment_content" *ngFor="let comment of comments">
+            <div class="comment_name">
+                {{comment.writer_name}}
+            </div>
+            <div class="comment_comment">
+                {{comment.comment}}
+            </div>
+            <div class="comment_createdAt">
+                {{comment.createdAt | date: 'MM-dd / HH:MM:SS'}}
+            </div>
+        </div>
+
+
+
+        <div class="comment_write">
+            <mat-card-content>
+                <form [formGroup]="commentForm" class="example-form">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <input matInput type="text" formControlName="comment" placeholder="댓글을 입력하세요." required>
+                    </mat-form-field>
+    
+                    <div fxLayoutAlign="center" fxLayout="column wrap">
+                        <button type="submit" mat-raised-button class="commentBtn" [disabled]="!commentForm.valid" (click)="saveComment()">댓글 작성</button>
+                    </div>
+                </form>
+            </mat-card-content>
+            
+        </div>
+       
+    
 
     </div>
+
+    
 </div>

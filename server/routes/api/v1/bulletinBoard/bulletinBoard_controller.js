@@ -109,7 +109,7 @@ exports.upload = async (req, res) => {
                     });
                 })
             })
-            await unlinkAsync(data.path);  // 파일 삭제)
+            // await unlinkAsync(data.path);  // 파일 삭제)
             
         } else {
             const obj = {
