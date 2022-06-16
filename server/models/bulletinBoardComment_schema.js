@@ -18,7 +18,6 @@ const bulletinBoardCommentScehma = mongoose.Schema(
         },
         reply: [
             {
-                _id: false,
                 comment_id: {
                     type: Object,
                 },

@@ -59,6 +59,7 @@ export class BulletinBoardDetailsComponent implements OnInit {
                 this.userProfileData = res;
             }	
         );
+        
 
         this.getbulletinBoardDetail();
         this.getComment();
@@ -192,5 +193,29 @@ export class BulletinBoardDetailsComponent implements OnInit {
                 this.replyCommentForm.reset();
             }
         })
+    }
+
+    // 댓글 삭제
+    deleteCommentBtn(_id) {
+        this.dialogService.openDialogConfirm('댓글을 삭제하시겠습니까?').subscribe((result)=> {
+            if(result) {
+                this.bulletinBoardService.deleteCommentBtn({_id}).subscribe((data)=> {
+                    this.getComment();
+                })
+            }
+        })
+        
+    }
+
+    // 답글 삭제
+    deleteReplyCommentBtn(replyCommentInfo) {
+        this.dialogService.openDialogConfirm('답글을 삭제하시겠습니까?').subscribe((result)=> {
+            if(result) {
+                this.bulletinBoardService.deleteReplyCommentBtn(replyCommentInfo).subscribe((data)=> {
+                    this.getComment();
+                })
+            }
+        })
+        
     }
 }

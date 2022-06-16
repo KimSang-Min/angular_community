@@ -39,16 +39,19 @@
 
         <div class="comment_content" *ngFor="let comment of comments let i = index">
             <div class="comment_content_inner">
-                <div class="comment_inner" (click)="createReply(i)">
+                <div class="comment_inner">
                     <div class="comment_name">
                         {{comment.writer_name}}
                     </div>
-                    <div class="comment_comment">
+                    <div class="comment_comment" (click)="createReply(i)">
                         {{comment.comment}}
                     </div>
                     <div class="comment_createdAt">
                         {{comment.createdAt | date: 'MM-dd / HH:MM:SS'}}
                     </div>
+                    <span *ngIf="comment.writer_id==userProfileData._id" class="deleteBtn" (click)="deleteCommentBtn(comment._id)">
+                        x
+                    </span>
                     <!-- <div class="replyBtn" (click)="createReply(i)">
                         <button mat-raised-button>답글</button>
                     </div> -->
@@ -65,6 +68,9 @@
                     </div>
                     <span class="replyComment_createdAt">
                         {{replies.createdAt | date: 'MM-dd / HH:MM:SS'}}
+                    </span>
+                    <span *ngIf="replies.reply_id==userProfileData._id" class="deleteBtn" (click)="deleteReplyCommentBtn(replies)">
+                        x
                     </span>
                 </div>
            
@@ -95,7 +101,7 @@
         <div class="comment_write">
             <mat-card-content>
                 <div class="comment_writer">
-                    작성자 {{this.bulletinBoardInfo?.writer.name}}
+                    작성자 {{this.userProfileData?.name}}
                 </div>
                 <form [formGroup]="commentForm" class="example-form">
                     <mat-form-field class="example-full-width" appearance="outline">

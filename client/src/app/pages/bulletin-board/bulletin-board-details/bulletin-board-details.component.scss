@@ -84,7 +84,11 @@ mat-divider {
             }
         }
 
-        .comment_inner:hover {
+        .comment_comment:hover {
+            cursor: pointer;
+        }
+
+        .deleteBtn:hover {
             cursor: pointer;
         }
     }
@@ -105,7 +109,7 @@ mat-divider {
         }
         
         .replyComment_comment {
-            width: 710px;
+            width: 666px;
             word-break: break-all;
         }
 

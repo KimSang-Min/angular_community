@@ -7,7 +7,7 @@ const { promisify } = require('util');
 
 
 // 댓글 등록
-exports.saveBulletinBoarComment = async (req, res) => {
+exports.saveBulletinBoardComment = async (req, res) => {
     console.log(`
 --------------------------------------------------
   User : ${req.decoded._id}
@@ -42,7 +42,7 @@ exports.saveBulletinBoarComment = async (req, res) => {
 
 
 // 댓글 가져오기
-exports.getBulletinBoarComment = async (req, res) => {
+exports.getBulletinBoardComment = async (req, res) => {
     console.log(`
 --------------------------------------------------
   User : ${req.decoded._id}
@@ -76,7 +76,7 @@ exports.getBulletinBoarComment = async (req, res) => {
 
 
 // 답글 등록
-exports.saveBulletinBoarReplyComment = async (req, res) => {
+exports.saveBulletinBoardReplyComment = async (req, res) => {
     console.log(`
 --------------------------------------------------
   User : ${req.decoded._id}
@@ -91,10 +91,10 @@ exports.saveBulletinBoarReplyComment = async (req, res) => {
     try {
 
         const updateReplyComment = await dbModels.BulletinBoardComment.findOneAndUpdate({
-                _id: data.comment_id 
-            },
+            _id: data.comment_id
+        },
             {
-                $push: { 
+                $push: {
                     reply: {
                         'comment_id': data.comment_id,
                         'reply_id': data.writer_id,
@@ -123,3 +123,71 @@ exports.saveBulletinBoarReplyComment = async (req, res) => {
 
 
 
+// 댓글 삭제
+exports.deleteBulletinBoardComment = async (req, res) => {
+    console.log(`
+--------------------------------------------------
+  User : ${req.decoded._id}
+  API  : delete comment
+  router.delete('/deleteBulletinBoardComment',  bulletinBoardCommentController.deleteBulletinBoardComment);
+--------------------------------------------------`);
+    const dbModels = global.DB_MODELS;
+
+    const data = req.query;
+    try {
+
+        const deleteComment = await dbModels.BulletinBoardComment.findOneAndDelete({_id: data._id});
+        return res.status(200).send({
+            message: 'Success delete comment',
+        })
+
+
+    } catch (err) {
+
+        console.log('[ ERROR ]', err);
+        res.status(500).send({
+            message: 'deleteing comment Error'
+        })
+    }
+};
+
+// 답글 삭제
+exports.deleteBulletinBoardReplyComment = async (req, res) => {
+    console.log(`
+--------------------------------------------------
+  User : ${req.decoded._id}
+  API  : delete comment
+  router.delete('/deleteBulletinBoardReplyComment', bulletinBoardCommentController.deleteBulletinBoardReplyComment);
+--------------------------------------------------`);
+    const dbModels = global.DB_MODELS;
+
+    const data = req.query;
+    console.log(data)
+    try {
+
+        const deleteReplyComment = await dbModels.BulletinBoardComment.updateOne(
+            { 
+                _id: data.comment_id 
+            },
+            {
+                $pull: {
+                    'reply': {
+                        _id: data._id
+                    }
+                }
+            }
+        );
+
+        return res.status(200).send({
+            message: 'Success delete reply comment',
+        })
+
+
+    } catch (err) {
+
+        console.log('[ ERROR ]', err);
+        res.status(500).send({
+            message: 'deleteing comment Error'
+        })
+    }
+};

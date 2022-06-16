@@ -39,16 +39,26 @@ export class BulletinBoardService {
 
     // 댓글 가져오기
     getComment(data) {
-        return this.http.get('/api/v1/bulletinBoardComment/getBulletinBoarComment', {params: data._id});
+        return this.http.get('/api/v1/bulletinBoardComment/getBulletinBoardComment', {params: data._id});
     }
 
     // 댓글 작성
     saveComment(data) {
-        return this.http.post('/api/v1/bulletinBoardComment/saveBulletinBoarComment', data);
+        return this.http.post('/api/v1/bulletinBoardComment/saveBulletinBoardComment', data);
     }
 
     // 답글 작성
     saveReplyComment(data) {
-        return this.http.post('/api/v1/bulletinBoardComment/saveBulletinBoarReplyComment', data);
+        return this.http.post('/api/v1/bulletinBoardComment/saveBulletinBoardReplyComment', data);
+    }
+
+    // 댓글 삭제
+    deleteCommentBtn(_id) {
+        return this.http.delete('/api/v1/bulletinBoardComment/deleteBulletinBoardComment', {params: _id});
+    }
+
+    // 답글 삭제
+    deleteReplyCommentBtn(replyCommentInfo) {
+        return this.http.delete('/api/v1/bulletinBoardComment/deleteBulletinBoardReplyComment' , {params: replyCommentInfo} );
     }
 }
