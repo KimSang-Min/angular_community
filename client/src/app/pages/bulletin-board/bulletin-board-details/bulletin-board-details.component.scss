@@ -16,6 +16,18 @@ mat-divider {
     overflow: auto;
 }
 
+.header_inner {
+    display: flex;
+    justify-content: space-between;
+
+    .bulletin_board_deleteBtn {
+        background-color: #ff4a3e;
+        color: white;
+        height: 30px;
+        margin: auto 0;
+    }
+}
+
 .main_content_img {
     text-align: center;
 }

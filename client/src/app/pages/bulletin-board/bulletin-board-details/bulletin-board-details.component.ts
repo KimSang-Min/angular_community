@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { DialogService } from 'src/@dw/dialog/dialog.service';
 import { BulletinBoardService } from 'src/@dw/services/bulletin-board/bulletin-board.service';
@@ -38,6 +38,7 @@ export class BulletinBoardDetailsComponent implements OnInit {
         private dialogService: DialogService,
         private formBuilder: FormBuilder,
         private dataStorageService: DataStorageService,
+        private router: Router,
     ) { 
         this.commentForm = this.formBuilder.group({
             comment: ['', [Validators.required]],
@@ -213,6 +214,25 @@ export class BulletinBoardDetailsComponent implements OnInit {
             if(result) {
                 this.bulletinBoardService.deleteReplyCommentBtn(replyCommentInfo).subscribe((data)=> {
                     this.getComment();
+                })
+            }
+        })
+        
+    }
+
+
+    // 게시글 삭제
+    bulletinBoardDelete() {
+
+        const _id = this.params._id;
+
+        this.dialogService.openDialogConfirm('게시글을 삭제하시겠습니까?').subscribe((result)=> {
+            if(result) {
+                this.bulletinBoardService.deleteBoard({_id}).subscribe((data: any)=> {
+                    if(data.message == 'Success delete board') {
+                        this.dialogService.openDialogPositive('삭제되었습니다.');
+                        this.router.navigate(['bulletin/list']);
+                    }
                 })
             }
         })

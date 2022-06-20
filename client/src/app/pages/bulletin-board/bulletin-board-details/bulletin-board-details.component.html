@@ -1,15 +1,20 @@
 <div class="wrapper">
     <div class="header">
-        <h2>{{ bulletinBoardInfo?.title }}</h2>
+        <div class="header_inner">
+            <h2>{{ bulletinBoardInfo?.title }}</h2>
+            <button mat-raised-button class="bulletin_board_deleteBtn" (click)="bulletinBoardDelete()">삭제</button>
+        </div>
         <div class="header_wrapper">
             <div>
                 <span>{{ bulletinBoardInfo?.writer.name }}</span>
             </div>
+            
             <div>
                 <span>조회 {{bulletinBoardInfo?.numberOfViews}} | </span>
                 <span>추천 {{bulletinBoardInfo?.recommendation}} | </span>
                 <span>댓글</span>
             </div>
+            
         </div>
     </div>
 

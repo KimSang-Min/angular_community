@@ -268,3 +268,34 @@ exports.opposite = async (req, res) => {
 		return res.status(500).send('db Error');
 	}
 };
+
+
+// 게시글 삭제
+exports.deleteBoard = async (req, res) => {
+    console.log(`
+--------------------------------------------------
+  User : ${req.decoded._id}
+  API  : delete comment
+  router.delete('/deleteBoard', bulletinBoardCommentController.deleteBoard);
+--------------------------------------------------`);
+    const dbModels = global.DB_MODELS;
+
+    const data = req.query;
+    console.log(data)
+    try {
+
+        const deleteboard = await dbModels.BulletinBoard.findOneAndDelete({_id: data._id});
+
+        return res.status(200).send({
+            message: 'Success delete board',
+        })
+
+
+    } catch (err) {
+
+        console.log('[ ERROR ]', err);
+        res.status(500).send({
+            message: 'deleteing board Error'
+        })
+    }
+};

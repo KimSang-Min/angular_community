@@ -22,6 +22,7 @@ router.post('/upload', upload.any(), bulletinBoardController.upload); // 게시�
 router.get('/getbulletinBoardDetail',  bulletinBoardController.getbulletinBoardDetail); // 게시글 상세보기
 router.post('/recommendation',  bulletinBoardController.recommendation); // 게시글 추천
 router.post('/opposite',  bulletinBoardController.opposite); // 게시글 반대
+router.delete('/deleteBoard', bulletinBoardController.deleteBoard); // 게시글 삭제
 
 
 

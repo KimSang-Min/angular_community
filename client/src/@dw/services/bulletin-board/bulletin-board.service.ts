@@ -61,4 +61,8 @@ export class BulletinBoardService {
     deleteReplyCommentBtn(replyCommentInfo) {
         return this.http.delete('/api/v1/bulletinBoardComment/deleteBulletinBoardReplyComment' , {params: replyCommentInfo} );
     }
+    // 게시글 삭제
+    deleteBoard(_id) {
+        return this.http.delete('/api/v1/bulletinBoard/deleteBoard' , {params: _id});
+    }
 }
