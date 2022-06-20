@@ -5,9 +5,13 @@ const multer = require('multer');
 	ADMIN TOP TIER FOLDER
 -----------------------------------*/
 
+
 /*-----------------------------------
 	INDEXES
 -----------------------------------*/
+const adDashBoard = require('./adDashBoard/adDashBoard_index')
+
+
 
 /*-----------------------------------
 	Controller
@@ -19,7 +23,9 @@ const adProfileCtrl = require('./adProfile/adProfile_controller');
 /*-----------------------------------
 	API
 -----------------------------------*/
-// router.use('/leave', leave);
+
+router.use('/adDashBoard', adDashBoard);
+
 
 
 

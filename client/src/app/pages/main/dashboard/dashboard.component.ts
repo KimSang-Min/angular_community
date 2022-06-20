@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DashBoardService } from 'src/@dw/services/dashBoard/dashBoard.service';
 
 @Component({
     selector: 'app-dashboard',
@@ -7,11 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-    
 
-    constructor() { }
+
+    constructor(
+        private dashBoardService: DashBoardService
+    ) { }
 
     ngOnInit(): void {
+        this.getMemberData();
+    }
+
+
+    // 멤버 정보 가져오기
+    getMemberData() {
+        this.dashBoardService.getMemberData().subscribe((data)=> {
+
+        })
     }
 
 }

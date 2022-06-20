@@ -2,7 +2,7 @@
     <div class="header">
         <div class="header_inner">
             <h2>{{ bulletinBoardInfo?.title }}</h2>
-            <button mat-raised-button class="bulletin_board_deleteBtn" (click)="bulletinBoardDelete()">삭제</button>
+            <button *ngIf="bulletinBoardInfo?.writer._id==userProfileData._id" mat-raised-button class="bulletin_board_deleteBtn" (click)="bulletinBoardDelete()">삭제</button>
         </div>
         <div class="header_wrapper">
             <div>

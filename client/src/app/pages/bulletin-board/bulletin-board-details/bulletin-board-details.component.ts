@@ -58,6 +58,7 @@ export class BulletinBoardDetailsComponent implements OnInit {
         this.dataStorageService.userProfile.pipe(takeUntil(this.unsubscribe$)).subscribe(
             (res: any) => {
                 this.userProfileData = res;
+                console.log(this.userProfileData)
             }	
         );
         
@@ -84,6 +85,7 @@ export class BulletinBoardDetailsComponent implements OnInit {
 
         this.bulletinBoardService.getbulletinBoardDetail(data).subscribe((data:any)=> {
             this.bulletinBoardInfo = data;  
+            console.log(this.bulletinBoardInfo)
             if(data.fileName) {
                 this.uploadImg = `http://localhost:3300/uploads/bulletinBoardFile/${data.fileName}`
             }
