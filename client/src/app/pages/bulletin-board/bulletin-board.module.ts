@@ -6,6 +6,7 @@ import { NgMaterialUIModule } from 'src/app/ng-material-ui/ng-material-ui.module
 import { BulletinBoardListComponent } from './bulletin-board-list/bulletin-board-list.component';
 import { BulletinBoardUploadComponent } from './bulletin-board-upload/bulletin-board-upload.component';
 import { BulletinBoardDetailsComponent } from './bulletin-board-details/bulletin-board-details.component';
+import { BulletinBoardEditComponent } from './bulletin-board-edit/bulletin-board-edit.component';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { BulletinBoardDetailsComponent } from './bulletin-board-details/bulletin
     BulletinBoardListComponent,
     BulletinBoardUploadComponent,
     BulletinBoardDetailsComponent,
+    BulletinBoardEditComponent,
   ],
   imports: [
     CommonModule,

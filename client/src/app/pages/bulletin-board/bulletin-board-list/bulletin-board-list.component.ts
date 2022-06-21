@@ -113,7 +113,6 @@ export class BulletinBoardListComponent implements OnInit {
     getbulletinBoardList() {
 
         this.bulletinBoardService.getbulletinBoardList().subscribe((data:any)=> {
-            console.log(data)
             this.contractList = new MatTableDataSource<PeriodicElement>(data);
             this.contractList.paginator = this.paginator;
             this.contractList.sort = this.sort

@@ -20,11 +20,17 @@ mat-divider {
     display: flex;
     justify-content: space-between;
 
+    .bulletin_board_editBtn {
+        background-color: #ffffff;
+        color: black;
+        margin: auto 0;
+    }
+
     .bulletin_board_deleteBtn {
         background-color: #ff4a3e;
         color: white;
-        height: 30px;
-        margin: auto 0;
+        height: 36px;
+        margin: auto 0 auto 20px;
     }
 }
 

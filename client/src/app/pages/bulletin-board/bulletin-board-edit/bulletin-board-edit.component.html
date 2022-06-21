@@ -5,7 +5,7 @@
             <form [formGroup]="uploadForm" #f="ngForm" (ngSubmit)="onSubmit(f.value)">
                 <p>
                     <mat-form-field>
-                        <input type="text" matInput placeholder="제목" formControlName="title">
+                        <input type="text" matInput formControlName="title" required [ngModel]="bulletinBoardInfo?.title">
                     </mat-form-field>
                 </p>
                 <p id="upload">
@@ -17,7 +17,7 @@
                 </p>
                 <p>
                     <mat-form-field appearance="outline">
-                        <textarea matInput placeholder="내용" formControlName="content" rows="10"></textarea>
+                        <textarea matInput placeholder="내용" formControlName="content" rows="10" required [ngModel]="bulletinBoardInfo?.content"></textarea>
                     </mat-form-field>
                 </p>
 

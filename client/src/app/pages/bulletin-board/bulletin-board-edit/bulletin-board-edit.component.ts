@@ -1,50 +1,84 @@
-
-import { Component, OnInit, } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { take } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { DialogService } from 'src/@dw/dialog/dialog.service';
 import { BulletinBoardService } from 'src/@dw/services/bulletin-board/bulletin-board.service';
-import { SocketioService } from 'src/@dw/services/socketio/socketio.service';
 import { DataStorageService } from 'src/@dw/services/store/data-storage.service';
 
 @Component({
-    selector: 'app-bulletin-board-upload',
-    templateUrl: './bulletin-board-upload.component.html',
-    styleUrls: ['./bulletin-board-upload.component.scss']
+    selector: 'app-bulletin-board-edit',
+    templateUrl: './bulletin-board-edit.component.html',
+    styleUrls: ['./bulletin-board-edit.component.scss']
 })
-export class BulletinBoardUploadComponent implements OnInit {
+export class BulletinBoardEditComponent implements OnInit {
 
-    private socket;
-    public fileData: File;
-    boardName: string;
-    uploadForm: FormGroup;
+    private unsubscribe$ = new Subject<void>();
+
+    public params: any;
+    bulletinBoardInfo; // 게시글 상세보기
     userProfileData;
 
+    public fileData: File;
+    uploadForm: FormGroup;
+
     constructor(
+        private route: ActivatedRoute,
         private router: Router,
         private formBuilder: FormBuilder,
+        private dataStorageService: DataStorageService,
         private bulletinBoardService: BulletinBoardService,
         private dialogService: DialogService,
-        private dataStorageService: DataStorageService,
-        private socketService: SocketioService,
     ) {
-
-        this.socket = socketService.socket;
-
         this.uploadForm = this.formBuilder.group({
             title: new FormControl('', [Validators.required]),
             content: new FormControl('', [Validators.required]),
             upload_file: ['', Validators.required],
         });
-    }
-
-    // 폼 필드에 쉽게 접근하기 위해 getter 설정
-    get f() { return this.uploadForm.controls; }
-
+     }
 
     ngOnInit(): void {
+
+        this.route.params.subscribe(params => {
+            this.params = params;
+        });
+
+        this.dataStorageService.userProfile.pipe(takeUntil(this.unsubscribe$)).subscribe(
+            (res: any) => {
+                this.userProfileData = res;
+                console.log(this.userProfileData)
+            }	
+        );
+        
+
+        this.getbulletinBoardDetail();
     }
+
+
+    ngOnDestroy() {
+        // unsubscribe all subscription
+        this.unsubscribe$.next();
+        this.unsubscribe$.complete();
+    
+    }
+
+
+    // 게시글 상세보기
+    getbulletinBoardDetail () {
+
+        const data = {
+            _id : this.params
+        }
+
+        this.bulletinBoardService.getbulletinBoardDetail(data).subscribe((data:any)=> {
+            this.bulletinBoardInfo = data;  
+            console.log(this.bulletinBoardInfo)
+            
+            
+        })
+    }
+
+
 
     onSubmit(data) {
         console.log(data)
@@ -54,7 +88,6 @@ export class BulletinBoardUploadComponent implements OnInit {
         } else {
             this.uploadBulletinBoard(data);
         }
-
     }
 
 
@@ -77,6 +110,7 @@ export class BulletinBoardUploadComponent implements OnInit {
         })
     }
 
+
     // 파일 업로드
     onFileChange(fileData: any) {
         if (fileData.target.files.length > 0) {
@@ -86,10 +120,7 @@ export class BulletinBoardUploadComponent implements OnInit {
         }
     }
 
-
     cancelBtn() {
         this.router.navigate(['bulletin/list']);
     }
-
 }
-

@@ -48,7 +48,7 @@ export class BulletinBoardDetailsComponent implements OnInit {
             replyComment: ['', [Validators.required]],
         });
     }
-
+ 
     ngOnInit(): void {
 
         this.route.params.subscribe(params => {
@@ -58,7 +58,6 @@ export class BulletinBoardDetailsComponent implements OnInit {
         this.dataStorageService.userProfile.pipe(takeUntil(this.unsubscribe$)).subscribe(
             (res: any) => {
                 this.userProfileData = res;
-                console.log(this.userProfileData)
             }	
         );
         
@@ -73,7 +72,7 @@ export class BulletinBoardDetailsComponent implements OnInit {
         this.unsubscribe$.next();
         this.unsubscribe$.complete();
     
-      }
+    }
 
 
     // 게시글 상세보기
@@ -85,7 +84,6 @@ export class BulletinBoardDetailsComponent implements OnInit {
 
         this.bulletinBoardService.getbulletinBoardDetail(data).subscribe((data:any)=> {
             this.bulletinBoardInfo = data;  
-            console.log(this.bulletinBoardInfo)
             if(data.fileName) {
                 this.uploadImg = `http://localhost:3300/uploads/bulletinBoardFile/${data.fileName}`
             }
@@ -134,8 +132,6 @@ export class BulletinBoardDetailsComponent implements OnInit {
 
         this.bulletinBoardService.getComment(data).subscribe((data)=> {
             this.comments = data;
-
-            console.log(this.comments)
         })
     }
 
@@ -239,5 +235,10 @@ export class BulletinBoardDetailsComponent implements OnInit {
             }
         })
         
+    }
+
+    // 편집 페이지로 이동
+    goToEdit() {
+        this.router.navigate([`bulletin/edit/${this.params._id}`])
     }
 }
