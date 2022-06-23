@@ -8,7 +8,7 @@ import { DashBoardService } from 'src/@dw/services/dashBoard/dashBoard.service';
 })
 export class DashboardComponent implements OnInit {
 
-
+    memberLength;
 
     constructor(
         private dashBoardService: DashBoardService
@@ -19,10 +19,10 @@ export class DashboardComponent implements OnInit {
     }
 
 
-    // 멤버 정보 가져오기
+    // 회원 수 가져오기
     getMemberData() {
-        this.dashBoardService.getMemberData().subscribe((data)=> {
-
+        this.dashBoardService.getMemberData().subscribe((data: any)=> {
+            this.memberLength = data.memberLength;
         })
     }
 
