@@ -299,3 +299,79 @@ exports.deleteBoard = async (req, res) => {
         })
     }
 };
+
+
+// 게시글 편집
+exports.edit = async (req, res) => {
+    console.log(`
+--------------------------------------------------
+  User : ${req.decoded._id}
+  router.post('/edit', upload.any(), bulletinBoardController.edit);
+--------------------------------------------------`);
+
+    const dbModels = global.DB_MODELS;
+
+    console.log(req.body)
+
+    const writerInfo = await dbModels.Member.findOne(
+        {
+            _id: req.decoded._id
+        });
+
+    const bulletinBoardList = await dbModels.BulletinBoard.find()
+  
+
+    
+
+
+    try {
+        if (req.body.upload_file != '') {
+
+            const data = req.files[0];
+            const resizePath = 'uploads/bulletinBoardFile/' + data.filename;
+           
+
+            // 이미지 리사이즈 작업 -> 원본을 리사이즈한 뒤에 원본을 제거
+            await sharp(data.path).resize(300, 300).toFile(resizePath);
+
+            // 파일시스템에서 파일 열기
+            fs.open(data.path, "r", function (err, fd) {
+                // binary 데이터를 저장하기 위해 파일 사이즈 만큼의 크기를 갖는 Buffer 객체 생성
+                const buffer = Buffer.alloc(data.size);
+                fs.read(fd, buffer, 0, buffer.length, null,  async function (err, bytes, buffer) {
+                    const obj = {
+                        "title": req.body.title,
+                        "content": req.body.content,
+                        "originalFileName": data.originalname,
+                        "fileName": data.filename,
+                        "filePath": data.path,
+                        "fileSize": data.size,
+                        "file": buffer,
+                    };
+                    const edit = await dbModels.BulletinBoard.findOneAndUpdate({_id: req.body._id}, obj);
+
+                    return res.send({
+                        message: 'success edit',
+                        edit
+                    })
+                })
+            })
+            // await unlinkAsync(data.path);  // 파일 삭제)
+            
+        } else {
+            const obj = {
+                "title": req.body.title,
+                "content": req.body.content,
+            };
+            const edit = await dbModels.BulletinBoard.findOneAndUpdate({_id: req.body._id}, obj);
+            return res.send({
+                message: 'success edit',
+                edit
+            })
+        }
+
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send('db Error');
+    }
+};

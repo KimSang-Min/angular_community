@@ -65,4 +65,9 @@ export class BulletinBoardService {
     deleteBoard(_id) {
         return this.http.delete('/api/v1/bulletinBoard/deleteBoard' , {params: _id});
     }
+
+    // 게시글 수정
+    editBulletinBoard(data) {
+		return this.http.post('/api/v1/bulletinBoard/edit', data);
+	}
 }

@@ -63,7 +63,7 @@ export class BulletinBoardEditComponent implements OnInit {
     }
 
 
-    // 게시글 상세보기
+    // 게시글 정보 가져오기
     getbulletinBoardDetail () {
 
         const data = {
@@ -86,14 +86,15 @@ export class BulletinBoardEditComponent implements OnInit {
         if (data.title == '' && data.content == '') {
             this.dialogService.openDialogNegative('제목과 내용을 입력해주세요.')
         } else {
-            this.uploadBulletinBoard(data);
+            this.editBulletinBoard(data);
         }
     }
 
 
-    uploadBulletinBoard(data) {
+    editBulletinBoard(data) {
         // FromData()를 사용해줘야 append 사용 가능하다
         const formData = new FormData();
+        formData.append('_id', this.params._id);
         formData.append('title', data.title);
         formData.append('content', data.content);
         formData.append('upload_file', this.uploadForm.get('upload_file').value);
@@ -101,8 +102,8 @@ export class BulletinBoardEditComponent implements OnInit {
 
         this.dialogService.openDialogConfirm('등록하시겠습니까?').subscribe((result) => {
             if (result) {
-                this.bulletinBoardService.uploadBulletinBoard(formData).subscribe((data: any) => {
-                    if (data.message == 'success upload') {
+                this.bulletinBoardService.editBulletinBoard(formData).subscribe((data: any) => {
+                    if (data.message == 'success edit') {
                         this.router.navigate(['bulletin/list']);
                     }
                 })

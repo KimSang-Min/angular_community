@@ -23,6 +23,7 @@ router.get('/getbulletinBoardDetail',  bulletinBoardController.getbulletinBoardD
 router.post('/recommendation',  bulletinBoardController.recommendation); // 게시글 추천
 router.post('/opposite',  bulletinBoardController.opposite); // 게시글 반대
 router.delete('/deleteBoard', bulletinBoardController.deleteBoard); // 게시글 삭제
+router.post('/edit', upload.any(), bulletinBoardController.edit); // 게시글 편집 
 
 
 
